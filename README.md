@@ -1,8 +1,7 @@
-Please make sure you do it in .md
+# Embedded-Resources Github Pages
 Website: https://ucsolarcarteam.github.io/Embedded-Resources/
 
-To add your documentation:
-
+## To add your documentation:
 1. ```git clone git@github.com:UCSolarCarTeam/Embedded-Resources.git```
 2. Make and checkout to a new branch
 3. Add your markdown file to the `markdown-files/` folder
