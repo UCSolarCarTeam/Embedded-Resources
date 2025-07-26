@@ -65,7 +65,7 @@ We can convert the analog signal to a digital representation by using sampling, 
 
 <img src="../images/adc.png" alt="ADC" width=70%>
 
-**Resolution** is defined as: *resolution* = Vref/2^n 
+**Resolution** is defined as: *resolution* = Vref/(2^n)
 - It is the number of volts between successive digital encodings
 - n = number of biys for each sample
 - This equation assumes a minimum voltage of 0V
@@ -81,3 +81,21 @@ For example, this is how 10-bit resolution would work:
 Since there are 10 bits, 2^10 is 1024. This means there are 1024 discrete values we can use (0-1023). If we had a sensor to detect a voltage ranging from 0-3V, receiving the ADC value of 1002 would mean that it is currently sensing a voltage of (1002/1024) * 3V = 2.94V.
 
 </div>
+
+
+
+
+
+
+--- 
+
+## Useful Things!
+
+<a href="https://www.disca.upv.es/aperles/arm_cortex_m3/llibre/st/STM32F439xx_User_Manual/group__adc__exported__functions.html" style = "color: #f0f8ff" >STM32F439xx HAL User Manual (ADC)
+</a>
+
+---
+Author: Millaine Li
+Last Updated: July 26, 2025
+Note: Took a lot of things from my lectures lol 
+

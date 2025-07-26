@@ -26,6 +26,7 @@ const renderMarkdownFiles = async () => {
     headerIds: false,
     mangle: false
   });
+  
   const container = document.getElementById('markdown-container');
 
   for (const { file, title } of markdownFiles) {
