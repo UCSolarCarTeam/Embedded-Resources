@@ -82,7 +82,9 @@ Since there are 10 bits, 2^10 is 1024. This means there are 1024 discrete values
 
 </div>
 
+Great! Now how do we use ADC in the context of our system?
 
+## Using ADC with an STM32
 
 
 
