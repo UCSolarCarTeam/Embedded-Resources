@@ -20,6 +20,12 @@ const loadMarkdownParser = () => {
 const renderMarkdownFiles = async () => {
   await loadMarkdownParser();
 
+  marked.setOptions({
+    gfm: true,
+    breaks: true,
+    headerIds: false,
+    mangle: false
+  });
   const container = document.getElementById('markdown-container');
 
   for (const { file, title } of markdownFiles) {
