@@ -12,12 +12,14 @@ There are two standard frameworks used to view and analyze signals:
 
 <img src="../images/cont-time.png" alt="Cont vs Disc" width=70%>
 
-Examples of continuous variables: temperature, distance, etc.
+<div style="background-color: #fff9db; border-left: 4px solid #fbc02d; padding: 1em; margin: 1em 0; border-radius: 6px; font-family: inherit; color: #4f4f4f;">
 
+**Example**
+
+Examples of continuous variables: temperature, distance, etc.
 Examples of discrete variables: ice cream flavours, number of people, etc.
 
-
-The real world is analog, but our microcontroller is digital!
+ </div>
 
 <div style="background-color: #f0f8ff; border-left: 4px solid #2196F3; padding: 1em; margin: 1em 0; border-radius: 6px; font-family: inherit; color: #4f4f4f;">
 
@@ -26,6 +28,9 @@ The real world is analog, but our microcontroller is digital!
 Typically, discrete values cannot be broken down more!!
 
 </div>
+
+The real world is analog, but our microcontroller is digital!
+
 
 ## Digital vs Analog
 
@@ -52,10 +57,27 @@ Ok so whats the difference between analog, digital, continuous, and discrete?
 
 ## Analog-to-Digital Converter (ADC)
 
-We can convert the analog to a digital representation by using sampling.
+Physical quantities are captured by some sort of sensor, and are usually reflected as something such as a voltage (usually with infinite values in between due to being continuous). 
 
-Sampling is measuring the signal at a periodic rate.
+We can convert the analog signal to a digital representation by using sampling, and quantization.
 
-<img src="../images/adc.png" alt="Cont vs Disc" width=70%>
+- **Sampling** is measuring the signal at a periodic rate
 
-- talk abt resolution i guess lol
+<img src="../images/adc.png" alt="ADC" width=70%>
+
+**Resolution** is defined as: *resolution* = Vref/2^n 
+- It is the number of volts between successive digital encodings
+- n = number of biys for each sample
+- This equation assumes a minimum voltage of 0V
+
+<div style="background-color: #fff9db; border-left: 4px solid #fbc02d; padding: 1em; margin: 1em 0; border-radius: 6px; font-family: inherit; color: #4f4f4f;">
+
+**Example**
+
+For example, this is how 10-bit resolution would work:
+
+<img src="../images/resolution.png" alt="Resolution" width=70%>
+
+Since there are 10 bits, 2^10 is 1024. This means there are 1024 discrete values we can use (0-1023). If we had a sensor to detect a voltage ranging from 0-3V, receiving the ADC value of 1002 would mean that it is currently sensing a voltage of (1002/1024) * 3V = 2.94V.
+
+</div>
