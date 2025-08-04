@@ -31,7 +31,8 @@ const renderMarkdownFiles = async () => {
 
   for (const { file, title } of markdownFiles) {
     try {
-      const res = await fetch(file);
+      //const res = await fetch(file); // this was doms line, the below is from chat bc it wouldnt refresh my changes :(
+      const res = await fetch(`${file}?t=${Date.now()}`);
       if (!res.ok) throw new Error(`Failed to load ${file}`);
       const mdText = await res.text();
       const html = marked.parse(mdText);

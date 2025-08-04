@@ -82,18 +82,44 @@ Since there are 10 bits, 2^10 is 1024. This means there are 1024 discrete values
 
 </div>
 
-Great! Now how do we use ADC in the context of our system?
+Great! Now how do we use ADC in the context of our system???
 
 ## Using ADC with an STM32
 
+<div style="background-color: #f0f8ff; border-left: 4px solid #2196F3; padding: 1em; margin: 1em 0; border-radius: 6px; font-family: inherit; color: #4f4f4f;">
+
+**Extra**
+
+STM32Cube includes:
+
+• STM32CubeMX, a graphical software configuration tool that allows the generation of C initialization code using graphical wizards.
+• A comprehensive embedded software platform, delivered per Series (such as STM32CubeF4 for STM32F4 Series)
+- The STM32Cube HAL, STM32 abstraction layer embedded software ensuring maximized portability across the STM32 portfolio. HAL APIs are available for all peripherals.
+- Low-layer APIs (LL) offering a fast light-weight expert-oriented layer which is closer to the hardware than the HAL. LL APIs are available only for a set of peripherals.
+- A consistent set of middleware components such as RTOS, USB, TCP/IP and Graphics. 
+- All embedded software utilities, delivered with a full set of examples.
+
+</div>
+
+**Step 1**
+Go to the .ioc file. It will look similar to this:
+
+INSERT IMAGE
+
+Click on "Analog". Here you can select an ADC to use! (for example select ADC1)
 
 
+
+**Step 2**
 
 --- 
 
 ## Useful Things!
 
 <a href="https://www.disca.upv.es/aperles/arm_cortex_m3/llibre/st/STM32F439xx_User_Manual/group__adc__exported__functions.html" style = "color: #f0f8ff" >STM32F439xx HAL User Manual (ADC)
+</a>
+
+<a href="https://deepbluembedded.com/stm32-adc-tutorial-complete-guide-with-examples/#:~:text=ADC%20Example%20Applications-,Introducing%20STM32%20ADC,trigger%20it%20to%20start%20conversion" >STM32F439xx HAL User Manual (ADC)
 </a>
 
 ---
