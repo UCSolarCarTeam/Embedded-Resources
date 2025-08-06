@@ -78,7 +78,7 @@ For example, this is how 10-bit resolution would work:
 
 <img src="../images/resolution.png" alt="Resolution" width=70%>
 
-Since there are 10 bits, 2^10 is 1024. This means there are 1024 discrete values we can use (0-1023). If we had a sensor to detect a voltage ranging from 0-3V, receiving the ADC value of 1002 would mean that it is currently sensing a voltage of (1002/1024) * 3V = 2.94V.
+Since there are 10 bits, 2^10 is 1024. This means there are 1024 discrete values we can use (0-1023). If we had a sensor to detect a voltage ranging from 0-3V, receiving the ADC value of 1002 would mean that it is currently sensing a voltage of (1002/1023) * 3V = 2.94V.
 
 </div>
 
