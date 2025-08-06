@@ -104,13 +104,50 @@ STM32Cube includes:
 **Step 1**
 Go to the .ioc file. It will look similar to this:
 
-INSERT IMAGE
+<img src="../images/stm32_ioc.png" alt="STM32 ioc" width=70%>
 
-Click on "Analog". Here you can select an ADC to use! (for example select ADC1)
+Click on "Pinout and Configuration" at the top left, then "Analog" on the left. Here you can select an ADC to use! (for example select ADC1). 
 
+Note: You can click 'ctrl' ('cmd' for macs) and left click on the pins to see what they can be used for. Clicking on PA1, we can see what the pin can be used for. Currently, we have ADC1_IN1 selected, which means we are using pin PA1 for ADC. We can see from the ADC config that we do indeed have IN1 selected for ADC1, and that some of the others are pink and unable to be selected such as IN2. This is because the correlated pin PA2 is currently being used for a different peripheral! We can see that the pin PA2 can be used as an ADC1_IN2, but we currently are using it for USART.
 
+<img src="../images/stm32_adc.png" alt="STM32 ioc" width=70%>
+
+Possible uses for PA1 and PA2 for this specific microcontroller:
+<img src="../images/stm32_PA1.png" alt="STM32 ioc" width=35%>  <img src="../images/stm32_PA2.png" alt="STM32 ioc" width=35%>
 
 **Step 2**
+Wherever you need to do your basic ADC conversion (I suggest making a function for it), you can use the functions:
+
+- HAL_StatusTypeDef HAL_ADC_Start(ADC_HandleTypeDef *hadc)
+  * @brief  Enables ADC and starts conversion of the regular channels.
+  * @param  hadc pointer to a ADC_HandleTypeDef structure that contains the configuration information for the specified ADC.
+  * @retval HAL status
+
+- HAL_StatusTypeDef HAL_ADC_PollForConversion(ADC_HandleTypeDef *hadc, uint32_t Timeout)
+  * @brief  Poll for regular conversion complete
+  * @note   ADC conversion flags EOS (end of sequence) and EOC (end of conversion) are cleared by this function.
+  * @note   This function cannot be used in a particular setup: ADC configured in DMA mode and polling for end of each conversion (ADC init parameter "EOCSelection" set to ADC_EOC_SINGLE_CONV). In this case, DMA resets the flag EOC and polling cannot be performed on each conversion. Nevertheless, polling can still be performed on the complete sequence.
+  * @param  hadc pointer to a ADC_HandleTypeDef structure that contains the configuration information for the specified ADC.
+  * @param  Timeout Timeout value in millisecond.
+  * @retval HAL status
+
+- uint32_t HAL_ADC_GetValue(ADC_HandleTypeDef *hadc)
+  * @brief  Gets the converted value from data register of regular channel.
+  * @param  hadc pointer to a ADC_HandleTypeDef structure that contains the configuration information for the specified ADC.
+  * @retval Converted value
+
+- HAL_StatusTypeDef HAL_ADC_Stop(ADC_HandleTypeDef *hadc)
+  * @brief  Disables ADC and stop conversion of regular channels.
+  * @note   Caution: This function will stop also injected channels.
+  * @param  hadc pointer to a ADC_HandleTypeDef structure that contains the configuration information for the specified ADC.
+  * @retval HAL status.
+
+
+For example, your code might look like:
+
+<img src="../images/adc_code.png" alt="STM32 ioc" width=70%>
+
+Note: Here to get the percentage we are dividing by 4095, because its 12-bit resolution
 
 --- 
 
@@ -119,11 +156,10 @@ Click on "Analog". Here you can select an ADC to use! (for example select ADC1)
 <a href="https://www.disca.upv.es/aperles/arm_cortex_m3/llibre/st/STM32F439xx_User_Manual/group__adc__exported__functions.html" style = "color: #f0f8ff" >STM32F439xx HAL User Manual (ADC)
 </a>
 
-<a href="https://deepbluembedded.com/stm32-adc-tutorial-complete-guide-with-examples/#:~:text=ADC%20Example%20Applications-,Introducing%20STM32%20ADC,trigger%20it%20to%20start%20conversion" >STM32F439xx HAL User Manual (ADC)
+<a href="https://deepbluembedded.com/stm32-adc-tutorial-complete-guide-with-examples/#:~:text=ADC%20Example%20Applications-,Introducing%20STM32%20ADC,trigger%20it%20to%20start%20conversion" style = "color: #f0f8ff" >More on STM32 ADC
 </a>
 
 ---
-Author: Millaine Li
-Last Updated: July 26, 2025
-Note: Took a lot of things from my lectures lol 
+Last Updated: August 6, 2025
+Note: Took a some things from my lectures lol 
 
