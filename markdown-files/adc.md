@@ -84,6 +84,14 @@ Since there are 10 bits, 2^10 is 1024. This means there are 1024 discrete values
 
 Great! Now how do we use ADC in the context of our system???
 
+<div style="background-color: #f0f8ff; border-left: 4px solid #2196F3; padding: 1em; margin: 1em 0; border-radius: 6px; font-family: inherit; color: #4f4f4f;">
+
+**Extra**
+
+Digital to Analog Converters (DACs) also exist. They convert from digital to analog (usually used when you need to output something analog like sound). You can also look into Pulse Width Modulation (PWM) which is somewhat similar in usage to a DAC and can produce a varyng output but is done with a duty cyce where for example if you want to dim an LED you might have it on for 50% of a duty cycle and off for 50% of a duty cycle (rather than on for 100% of the cycle). Ideally, it will turn on and off so quickly it will just look dim rather than flashing. 
+
+</div>
+
 ## Using ADC with an STM32
 
 <div style="background-color: #f0f8ff; border-left: 4px solid #2196F3; padding: 1em; margin: 1em 0; border-radius: 6px; font-family: inherit; color: #4f4f4f;">
