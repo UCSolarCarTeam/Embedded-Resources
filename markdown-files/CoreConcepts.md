@@ -1,60 +1,34 @@
 <link rel="stylesheet" href="../styles.css">
 
 # Core Concepts 🧑‍💻
-----
+
 ## What is Embedded?
-Embedded systems are the bridge between electrical systems and programming. Embedded programmers work on tiny computers called microprocessors (MCUs). These are chips that are basically small computers designed to control electronic devices. Almost every device we see involves embedded systems. From TVs to washing machines to cars, they're everywhere!
-<img src="../images/cont-time.png" alt="Cont vs Disc" width=70%>
+Embedded systems are the bridge between electrical systems and programming. Embedded programmers work on tiny computers called microcontroller (MCUs). These are chips that are basically small computers designed to control electronic devices. Almost every device we see involves embedded systems. From TVs to washing machines to cars, they're everywhere!
+<p align="center">
+<img src="../images/BPSembedded_Race2025.png" alt="Embedded work at the FSGP race in 2025!" width=50% >
+<p align="center">Embedded work at the FSGP race in 2025! This picture shows the boards for the battery protection system that the embedded team programmed.</p>
+</p>
+
 ## Different types of Embedded Systems
 Embedded Systems can be classified into different categories. They are:
 1. Stand Alone Embedded Systems: These are also called "bare metal". They have no operating system and just works by itself. Examples include microwaves, calculators and the Solar Car's CCP boards!
 2. Real Time Embedded Systems: These are systems that integrate an operating system. They are more complex than a stand alone embedded system. Examples of this would be pacemakers or the Solar Car's MBMS board!
-3. 
-
-In Solar Car, projects such
-<div style="background-color: #fff9db; border-left: 4px solid #fbc02d; padding: 1em; margin: 1em 0; border-radius: 6px; font-family: inherit; color: #4f4f4f;">
-
-**Example**
-
-Examples of continuous variables: temperature, distance, etc.
-Examples of discrete variables: ice cream flavours, number of people, etc.
-
- </div>
-
-<div style="background-color: #f0f8ff; border-left: 4px solid #2196F3; padding: 1em; margin: 1em 0; border-radius: 6px; font-family: inherit; color: #4f4f4f;">
-
-**Extra**
-
-Typically, discrete values cannot be broken down more!!
-
-</div>
-
-The real world is analog, but our microcontroller is digital!
+3. Networked Embedded Systemss: These use networks such as LAN or the internet. Examples would include a home security system.
+4. Mobile Embedded Systems: These are the embedded systems in cell phones. We don't do that stuff in Solar Car.
 
 
-## Digital vs Analog
+## Microprocessor vs Microcontroller
+A _microprocessor_ is a silicon chip that is able to perform arithmetic and logical operations. This chip is called a CPU. It is dependent on other chips for timers, memory chips, etc. It also doesn't contain built in input/output ports.
+A _microcontroller_ contains a lot more and has it's own CPU, RAM, memory storage, FLASH memory, timer, interrupt control units, and input/output ports. 
 
-An **analog** signal refers to a continuously-valued signal, meanwhile…
-
-A **digital** signal refers to a discretely-valued signal, where its magnitude is determined by quantization of each discrete point in time
-
-- **quantization** assigns a single number to represent a range of magnitudes of a continuous signal
-
-
-The world is often analog, but our microcontrollers can only operate with discrete values…
-
-So how do we resolve this?
-
-<div style="background-color: #f0f8ff; border-left: 4px solid #2196F3; padding: 1em; margin: 1em 0; border-radius: 6px; font-family: inherit; color: #4f4f4f;">
-
-**Extra**
-
-Ok so whats the difference between analog, digital, continuous, and discrete?
-
-- In my mind, I think of it as how discrete-time and continuous-time describe the x-axis (time), where continuous means we know the y-axis value at every single point in time, and discrete meaning we only know the y-axis value at specific points in time. Analog and digital can be thought of as describing the y-axis (or the magnitude), where analog means the y-axis value can be any value, but a digital signal is one that samples a signal and performs quantization, resulting in a y-axis value that is discrete! ADC is necessary because digitally, we cannot represent something continuous (because everything needs some sort of bit representation), and so we quantize the values using a certain resolution. A higher bit resolution means that the y-axis value can be more specific/similar to its true real world value.
-
-</div>
-
+## Endianness
+When we are reading data, we need to know where to start from. Similar to how some languages read from left to right such as English while others from right to left such as Arabic, data also has that variability. That is what we call endianness. There are two types: little-endian and big-endian. **Remember that the lowest address is the left-most one**
+- Litte-endian means the lowest-order byte will be stored at the lowest-address. Btye 0 will be at address "0", while byte 1 will be higher at address "1".
+- Big-endian means that the highest-order byte will be at the lowest address. Byte 0 will be at address "1", while byte 1 will be at address "0".
+<p align="center">
+<img src="../images/Endianness.png" alt="Photo explaining endianness. Photo taken from: https://stackoverflow.com/questions/13926760/the-reason-behind-endianness" width=50% >
+<p align="center">Endianness example</p>
+</p>
 ## Analog-to-Digital Converter (ADC)
 
 Physical quantities are captured by some sort of sensor, and are usually reflected as something such as a voltage (usually with infinite values in between due to being continuous). 
