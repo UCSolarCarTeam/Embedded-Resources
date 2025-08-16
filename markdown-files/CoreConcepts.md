@@ -11,8 +11,8 @@ Embedded systems are the bridge between electrical systems and programming. Embe
 
 ## Different types of Embedded Systems
 Embedded Systems can be classified into different categories. They are:
-1. Stand Alone Embedded Systems: These are also called "bare metal". They have no operating system and just works by itself. Examples include microwaves, calculators and the Solar Car's CCP boards!
-2. Real Time Embedded Systems: These are systems that integrate an operating system. They are more complex than a stand alone embedded system. Examples of this would be pacemakers or the Solar Car's MBMS board!
+1. Stand Alone Embedded Systems: These are also called "bare metal". Lowkey, let's just call these bare metal only. They have no operating system and just works by itself. Examples include microwaves, calculators and the Solar Car's CCP boards!
+2. Real Time Embedded Systems: These are systems that integrate an operating system. They are more complex than bare metal system. Examples of this would be pacemakers or the Solar Car's MBMS board!
 3. Networked Embedded Systemss: These use networks such as LAN or the internet. Examples would include a home security system.
 4. Mobile Embedded Systems: These are the embedded systems in cell phones. We don't do that stuff in Solar Car.
 
