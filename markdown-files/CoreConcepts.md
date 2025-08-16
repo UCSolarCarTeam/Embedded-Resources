@@ -1,17 +1,17 @@
 <link rel="stylesheet" href="../styles.css">
 
-# Analog-to-Digital Converter (ADC)
+# Core Concepts 🧑‍💻
 ----
-## Signals
-A **signal** is a detectable physical quantity (e.g. voltage, current, etc.) by which information can be transmitted. Typically, microcontrollers detect signals as voltages.
-
-There are two standard frameworks used to view and analyze signals: 
-
-- **continuous-time**:  time variations are considered on an infinitesimal scale
-- **discrete-time**: time variations are considered in discrete steps
-
+## What is Embedded?
+Embedded systems are the bridge between electrical systems and programming. Embedded programmers work on tiny computers called microprocessors (MCUs). These are chips that are basically small computers designed to control electronic devices. Almost every device we see involves embedded systems. From TVs to washing machines to cars, they're everywhere!
 <img src="../images/cont-time.png" alt="Cont vs Disc" width=70%>
+## Different types of Embedded Systems
+Embedded Systems can be classified into different categories. They are:
+1. Stand Alone Embedded Systems: These are also called "bare metal". They have no operating system and just works by itself. Examples include microwaves, calculators and the Solar Car's CCP boards!
+2. Real Time Embedded Systems: These are systems that integrate an operating system. They are more complex than a stand alone embedded system. Examples of this would be pacemakers or the Solar Car's MBMS board!
+3. 
 
+In Solar Car, projects such
 <div style="background-color: #fff9db; border-left: 4px solid #fbc02d; padding: 1em; margin: 1em 0; border-radius: 6px; font-family: inherit; color: #4f4f4f;">
 
 **Example**
