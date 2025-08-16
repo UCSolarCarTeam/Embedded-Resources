@@ -51,6 +51,7 @@ When we are reading data, we need to know where to start from. Similar to how so
 </p>
 
 ## RTOS
+Real-Time Operating System (RTOS)
 
 ## ISRs
 
