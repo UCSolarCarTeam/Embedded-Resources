@@ -60,9 +60,11 @@ When we are reading data, we need to know where to start from. Similar to how so
 ## Your Future Job as an Embedded Programmer 🧙‍♀️
 So! Now, you're on the embedded team. A team that plays an integral part on making our car run. Congratulations! Your job will be to communicate with the electrical team, write code for a specific purpose of the car, and then test it! These projects can control important parts of the car such as making sure it don't blow up! You can use this opportunity to learn a lot and grow, so I hope you do and try your best! 
 
-## Using ADC with an STM32
+## Embedded Example with an STM32
 
 Last Updated: August 17, 2025
+
 Note: Working on it
+
 Author: Khadeeja Abbas
 
