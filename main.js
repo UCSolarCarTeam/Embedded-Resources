@@ -4,6 +4,13 @@ const markdownFiles = [
   // ADD NEW MARKDOWN FILES HERE
 ];
 
+const REPO_BASE = '/embedded-resources';
+
+const fixImagePaths = (mdText) => {
+  // Replace ../images/... with /repo-name/images/...
+  return mdText.replace(/\.\.\/images\//g, `${REPO_BASE}/images/`);
+};
+
 // Load the Markdown parser (e.g., marked.js)
 const loadMarkdownParser = () => {
   return new Promise((resolve, reject) => {
@@ -24,9 +31,13 @@ const renderMarkdownFiles = async () => {
     try {
       const res = await fetch(file);
       if (!res.ok) throw new Error(`Failed to load ${file}`);
-      const mdText = await res.text();
+      
+      let mdText = await res.text();
+      mdText = fixImagePaths(mdText);
+
       const html = marked.parse(mdText);
 
+      // Create a details element for each markdown file
       const details = document.createElement('details');
       const summary = document.createElement('summary');
       summary.textContent = title;
