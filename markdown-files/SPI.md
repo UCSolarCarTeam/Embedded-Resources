@@ -54,7 +54,6 @@ SPI has 4 modes, which just decide when data gets read compared to the clock.
 5. When finished, the master sets **CS high** again to deselect the slave.
 
 ![spi clock diagram](../images/example-spi-clock-diagram.png)
-orange line is 
 
 ---
 
