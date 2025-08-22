@@ -4,7 +4,7 @@ const markdownFiles = [
   // ADD NEW MARKDOWN FILES HERE
 ];
 
-const REPO_BASE = 'https://github.com/UCSolarCarTeam/Embedded-Resources/blob/main';
+const REPO_BASE = 'https://ucsolarcarteam.github.io/Embedded-Resources/images';
 
 const fixImagePaths = (mdText) => {
   // Replace ../images/... with link to images in the repo
