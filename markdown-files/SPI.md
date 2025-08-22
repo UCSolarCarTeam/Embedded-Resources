@@ -1,6 +1,4 @@
-# SPI Made Simple
-
-## What is SPI?
+# What is SPI?
 SPI (Serial Peripheral Interface) is a way for electronics to **talk to each other**. Usually, you have one **master** device (like your microcontroller) that controls the conversation, and one or more **slave** devices (like sensors, displays, or memory chips) that respond.
 
 For example, our acceleration and regenerative braking pedals (slaves) use SPI to send data to the B3 Board (master).
