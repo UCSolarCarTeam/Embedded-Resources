@@ -4,11 +4,11 @@ const markdownFiles = [
   // ADD NEW MARKDOWN FILES HERE
 ];
 
-const REPO_BASE = 'https://ucsolarcarteam.github.io/Embedded-Resources/images';
+const REPO_IMAGE_BASE = 'https://ucsolarcarteam.github.io/Embedded-Resources/images';
 
 const fixImagePaths = (mdText) => {
   // Replace ../images/... with link to images in the repo
-  return mdText.replace(/\.\.\/images\//g, `${REPO_BASE}/images/`);
+  return mdText.replace(/\.\.\/images\//g, `${REPO_IMAGE_BASE}/`);
 };
 
 // Load the Markdown parser (e.g., marked.js)
