@@ -1,7 +1,5 @@
 // List of markdown files to load and render
 const markdownFiles = [
-  { file: './markdown-files/test.md', title: 'TeStinG' },
-  { file: './markdown-files/another-test.md', title: 'T E S T 2' },
   { file: './markdown-files/adc.md', title: 'Analog-to-Digital Converter (ADC)' },
   { file: './markdown-files/SPI.md', title: 'SPI' },
 
