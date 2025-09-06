@@ -1,6 +1,10 @@
 // List of markdown files to load and render
 const markdownFiles = [
+  { file: './markdown-files/test.md', title: 'TeStinG' },
+  { file: './markdown-files/another-test.md', title: 'T E S T 2' },
+  { file: './markdown-files/adc.md', title: 'Analog-to-Digital Converter (ADC)' },
   { file: './markdown-files/SPI.md', title: 'SPI' },
+
   // ADD NEW MARKDOWN FILES HERE
 ];
 
@@ -25,11 +29,19 @@ const loadMarkdownParser = () => {
 const renderMarkdownFiles = async () => {
   await loadMarkdownParser();
 
+  marked.setOptions({
+    gfm: true,
+    breaks: true,
+    headerIds: false,
+    mangle: false
+  });
+  
   const container = document.getElementById('markdown-container');
 
   for (const { file, title } of markdownFiles) {
     try {
-      const res = await fetch(file);
+      //const res = await fetch(file); // this was doms line, the below is from chat bc it wouldnt refresh my changes :(
+      const res = await fetch(`${file}?t=${Date.now()}`);
       if (!res.ok) throw new Error(`Failed to load ${file}`);
       
       let mdText = await res.text();
