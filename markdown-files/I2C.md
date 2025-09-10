@@ -11,7 +11,7 @@ Here is an example of how the lines may flow, where the As represent the master 
 
 ### Example:
 
-<img src="./Images/Example.png" alt="Example" width="100%">
+<img src="./images/I2C-address-lines-example.png" alt="Example" width="100%">
 
 This diagram is an example of how the lines might look in action. The A bits represent the Master sending a 7-bit address to pick a specific Slave, followed by the R/W bit (read or write) instruction, and then an acknowledgment bit, which tells the Master that the Slave received the instruction. After a short pause, the D bits represent the 8-bit data being sent, and at the end, there’s another acknowledgment bit to confirm the data was received. This indicates that the communication was successful and the process is done.
 
