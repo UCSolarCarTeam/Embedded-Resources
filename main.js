@@ -1,7 +1,8 @@
 // List of markdown files to load and render
 const markdownFiles = [
+  { file: './markdown-files/I2C.md', title: 'Inter-Integrated Circuit (I2C)' },
   { file: './markdown-files/adc.md', title: 'Analog-to-Digital Converter (ADC)' },
-  { file: './markdown-files/SPI.md', title: 'SPI' },
+  { file: './markdown-files/SPI.md', title: 'Serial Peripheral Interface (SPI)' },
 
   // ADD NEW MARKDOWN FILES HERE
 ];
