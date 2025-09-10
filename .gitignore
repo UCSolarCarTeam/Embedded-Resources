@@ -1,0 +1,32 @@
+# Build directories and artifacts
+build/
+Debug/
+Release/
+*.o
+*.d
+*.elf
+*.bin
+*.hex
+*.map
+*.list
+*.lss
+*.out
+
+# IDE and tooling metadata
+.cproject
+.project
+.settings/
+.metadata/
+.autosave/
+*.launch
+
+# Backup and temp files
+*~
+*.swp
+*.bak
+*.tmp
+
+# VSCode and JetBrains IDEs
+.vscode/
+.idea/
+*.code-workspace
