@@ -1,4 +1,3 @@
-/* hamburger.css */
 .hamburger {
   font-size: 2rem;
   cursor: pointer;
@@ -6,6 +5,10 @@
   border: none;
   color: white;
   margin-bottom: 1rem;
+}
+
+#menu-toggle:hover {
+    color: #ff6666;
 }
 
 .sidebar {
@@ -52,11 +55,6 @@
   margin-left: 250px;
 }
 
-#menu-toggle:hover {
-    color: #ff6666;
-}
-
-/* Close button styling inside sidebar */
 .close-btn {
   font-size: 2rem;
   background: none;
