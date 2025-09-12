@@ -4,10 +4,16 @@
   <meta charset="UTF-8">
   <title>U of C Solar Car Embedded Resources</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="hamburger.css">
+  <script type="module" src="main.js"></script>
 </head>
 <body>
-  <h1 id="U-of-C-Embedded-Resources">University of Calgary Solar Car Embedded Resources</h1>
+  <button class="hamburger" id="menu-toggle">☰</button>
+  <div class="sidebar" id="sidebar">
+    <ul id="markdown-list"></ul>
+  </div>
+  <h1>University of Calgary Solar Car Embedded Resources</h1>
   <div id="markdown-container"></div>
-  <script src="main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </body>
 </html>

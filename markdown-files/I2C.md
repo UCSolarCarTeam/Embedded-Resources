@@ -1,5 +1,5 @@
-# Onboarding - I2C
-
+# Inter-Integrated Circuit (I2C)
+---
 ## What is I2C?
 I2C (or IIC) stands for Inter-Integrated Circuit. It’s a protocol that lets one integrated circuit (IC) control multiple other ICs using just two lines. Basically, one “Master” (the IC doing the controlling) can communicate with multiple “Slaves” (the ICs being controlled). It uses two lines, SDA, the data line (bidirectional), and the SCL, the clock line.
 
