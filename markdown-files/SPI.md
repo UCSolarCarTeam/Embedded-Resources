@@ -1,3 +1,4 @@
+---
 # Serial Peripheral Interface (SPI)
 ---
 ## What is SPI?

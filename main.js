@@ -1,6 +1,7 @@
 import { populateMarkdownList } from "./hamburger.js";
 
 const markdownFiles = [
+  { file: "./markdown-files/homepage.md", title: "Home" },
   { file: "./markdown-files/I2C.md", title: "Inter-Integrated Circuit (I2C)" },
   { file: "./markdown-files/adc.md", title: "Analog-to-Digital Converter (ADC)" },
   { file: "./markdown-files/SPI.md", title: "Serial Peripheral Interface (SPI)" },

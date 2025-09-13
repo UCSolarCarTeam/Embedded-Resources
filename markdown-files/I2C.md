@@ -1,3 +1,4 @@
+---
 # Inter-Integrated Circuit (I2C)
 ---
 ## What is I2C?

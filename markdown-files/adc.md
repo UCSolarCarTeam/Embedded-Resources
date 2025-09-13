@@ -1,5 +1,4 @@
-<link rel="stylesheet" href="../styles.css">
-
+---
 # Analog-to-Digital Converter (ADC)
 ----
 ## Signals
