@@ -5,10 +5,10 @@
 What is I2C?
 I2C (or IIC) stands for Inter-Integrated Circuit. It’s a protocol that lets one integrated circuit (IC) control multiple other ICs using just two lines. Basically, one “Master” (the IC doing the controlling) can communicate with a single or multiple “Slave(s)” (the ICs being controlled such as sensors, displays, etc). It uses two lines, SDA, the data line (bidirectional), and the SCL, the clock line.
 ### Master and a single slave:
-<img src="../images/Master-and-a-single-slave.png" alt="Master-SingleSlaves" width=100%>
+<img src="../images/Master-and-a-single-slave.png" alt="Master-SingleSlaves" width=50%>
 
 ### Master and multiple slaves:
-<img src="../images/Master-and-multiple-slaves.png" alt="Master-MultipleSlaves" width=100%>
+<img src="../images/Master-and-multiple-slaves.png" alt="Master-MultipleSlaves" width=50%>
 
 The SDA line is used to send and receive data, but only one device talks at a time. The Master picks which Slave to talk to by sending its address over SDA. To start communication, the Master pulls SDA low, then SCL low shortly after.
 
