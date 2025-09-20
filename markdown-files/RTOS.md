@@ -39,12 +39,26 @@ The **stack is a last-in-first-out system (like a stack of pancakes)** (LIFO), w
 Let's say we have multiple tasks that are all editing the same variable. If one tasks starts editing the variable and then is stopped before finishing, the second task will start editing and that will corrupt the data. Data corruption is bad. This is called a **race condition**
 
 To prevent multiple tasks from editing the same variable we can use **queues, mutexes, and semaphores**. 
-A queue is just like a line at a grocery store. The first task that comes in is the first task out (FIFO). You serve the first costumer before moving onto the next. This ensures that the groceries don't get mixed up. Adding tasks to the queue is atomic meaning it can't be interrupted and corrupted when it is occuring. Also, the **whole value of the task is added to the queue instead of just a reference**. Pointers can cause problems. This ensures that only 
+
+A **queue** is just like a line at a grocery store. The first task that comes in is the first task out (FIFO). You serve the first costumer before moving onto the next. This ensures that the groceries don't get mixed up. Adding tasks to the queue is atomic meaning it can't be interrupted and corrupted when it is occuring. Also, the **whole value of the task is added to the queue instead of just a reference**. Pointers can cause problems. Queues are good for intertask communication, not good for shared variables like global variables.
+
+A **mutex** blocks off a piece of code so that only one task can edit it at a time. The piece of code it blocks off is called the critical section. When only one task is allowed to edit at a time, that is called mutual exclusion.
+
+A **semaphore** is similar to a mutex but allows mutliple tasks into a critical section. We can define what the limit of the semaphore is. Usually, one of the tasks adds to the shared resource while another takes from it.
+
+---
+
 When running tasks on freeRTOS, the priority matters. Tasks with higher priority take precedence and run over tasks with lower priority. The tasks with the highest priority are hardware interrupts. If there are multiple hardware interrupts, that's called nested interrupts and the priority scheduling depends on the device you're using.
 If you have multiple cores, different tasks can run at the same time. If you have one core, the tasks will run based off scheduling. This scheduling is determined every one tick.
 
+**Be careful of one task hogging all the resources -- this is starvation**
+Also,
+**Be careful of when no task has enough resources but they're not willing to share -- this is deadlock**
+You can also use freeRTOS to make software timers.
 
 Why use freeRTOS? When you have many tasks you want to run and want to meet timing deadlines!
+
+Below is how to implement RTOS into your project. We're going to be looking at the MBMS code!
 
 ## Terminology
 Task is similar to a thread
