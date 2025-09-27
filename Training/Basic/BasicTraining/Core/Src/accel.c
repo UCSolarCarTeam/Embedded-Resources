@@ -1,3 +1,9 @@
+/*
+ * accel.c
+ *
+ *  Created on: Sep 19, 2025
+ *      Author: mkom0
+ */
 #include "accel.h"
 #include <stdint.h>
 

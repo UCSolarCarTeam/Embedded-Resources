@@ -1,4 +1,4 @@
-../Core/Src/accel.c:7:19:accel_init	2
-../Core/Src/accel.c:26:6:accel_read_raw	8
-../Core/Src/accel.c:45:6:accel_read_g	4
-../Core/Src/accel.c:59:6:accel_poll_data	4
+../Core/Src/accel.c:13:19:accel_init	2
+../Core/Src/accel.c:32:6:accel_read_raw	8
+../Core/Src/accel.c:51:6:accel_read_g	4
+../Core/Src/accel.c:65:6:accel_poll_data	4
