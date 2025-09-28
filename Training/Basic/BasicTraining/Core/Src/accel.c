@@ -33,10 +33,12 @@ void accel_read_raw(int16_t *x, int16_t *y, int16_t *z) {
     uint8_t buffer[6];
     HAL_StatusTypeDef st = HAL_I2C_Mem_Read(&hi2c1,(ACCELEROMETER_DEVICE_ADDR <<1),0x0D,I2C_MEMADD_SIZE_8BIT,buffer,6,100);
     if (st != HAL_OK) {
-        // On error, return zeros (or keep last values if you prefer)
-        if (x) *x = 0;
-        if (y) *y = 0;
-        if (z) *z = 0;
+        if (x) 
+			*x = 0;
+        if (y) 
+			*y = 0;
+        if (z) 
+			*z = 0;
         return;
     }
     if (x)
