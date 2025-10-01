@@ -38,7 +38,6 @@
         * Output
         * EVENT_OUT
         * EXTI
-     PA5   ------> S_TIM2_CH1
 */
 void MX_GPIO_Init(void)
 {
@@ -55,7 +54,7 @@ void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(LED0_GPIO_Port, LED0_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, IOX_nRESET_Pin|SPI2_CS_IOX_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, IOX_nRESET_Pin|SPI2_CS_IOX_Pin|TRIG_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(SPI2_CS0_GPIO_Port, SPI2_CS0_Pin, GPIO_PIN_RESET);
@@ -66,14 +65,6 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(LED0_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : PA5 */
-  GPIO_InitStruct.Pin = GPIO_PIN_5;
-  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  GPIO_InitStruct.Alternate = GPIO_AF1_TIM2;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pin : ACC_INT2_Pin */
   GPIO_InitStruct.Pin = ACC_INT2_Pin;
@@ -87,8 +78,8 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : IOX_nRESET_Pin SPI2_CS_IOX_Pin */
-  GPIO_InitStruct.Pin = IOX_nRESET_Pin|SPI2_CS_IOX_Pin;
+  /*Configure GPIO pins : IOX_nRESET_Pin SPI2_CS_IOX_Pin TRIG_Pin */
+  GPIO_InitStruct.Pin = IOX_nRESET_Pin|SPI2_CS_IOX_Pin|TRIG_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -100,12 +91,6 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(SPI2_CS0_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : PB8 */
-  GPIO_InitStruct.Pin = GPIO_PIN_8;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI0_IRQn, 0, 0);
