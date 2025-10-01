@@ -61,33 +61,80 @@ Why use freeRTOS? When you have many tasks you want to run and want to meet timi
 Below is how to implement RTOS into your project. We're going to be looking at the MBMS code!
 
 You put the definitions for the threads (tasks), mutexes, and queues under private variables in the main.c:
-// image showing that
+<p align="center">
+<img src="../images/private-variables.png" alt="Photo of what the 'private variables' section looks like." width=20% >
+<p align="center">Photo of what the 'private variables' section looks like.</p>
+</p>
 
-Here you can set the priority of the task. This one is set to the normal priority. There are a bunch of different priority levels. To see them just hover over the (osPriority_t) cast.
 
-// insert image
+Here you can set the priority of the task. This one is set to the normal priority. There are a bunch of different priority levels. To see them just hover over the (osPriority_t) cast. If you create a new project, there will be a 'default_task.' This tasks ensures something is always running.
+
+<p align="center">
+<img src="../images/defining-task.png" alt="Photo of what a task definition looks like." width=20% >
+<p align="center">Photo of what a task definition looks like.</p>
+</p>
+
 
 Here is the basis for defining mutexes as well:
-// insert image
+
+<p align="center">
+<img src="../images/defining-mutex.png" alt="Photo of what a mutex definition looks like." width=20% >
+<p align="center">Photo of what a mutex definition looks like.</p>
+</p>
 
 
 In the main(void) loop, you create the handles for your mutexes, queues, and flags. A handle is basically saying you don't need to worry about the specific of the resource, just use this handle to use it! 
 
-// insert 3 images
+<p align="center">
+<img src="../images/setting-flag-handle.png" alt="Photo of what setting a flag looks like." width=20% >
+<p align="center">Photo of what setting a flag looks like.</p>
+</p>
+
+<p align="center">
+<img src="../images/setting-mutex-handle.png" alt="Photo of what setting a mutex looks like." width=20% >
+<p align="center">Photo of what setting a mutex looks like.</p>
+</p>
+
+<p align="center">
+<img src="../images/setting-queue-handle.png" alt="Photo of what setting a queue looks like." width=20% >
+<p align="center">Photo of what setting a queue looks like.</p>
+</p>
+
 
 You also start your tasks here. This is very important. Don't forget to start your task or your functions won't run! 
 
+<p align="center">
+<img src="../images/setting-task-handle.png" alt="Photo of what setting a task looks like." width=20% >
+<p align="center">Photo of what setting a task looks like.</p>
+</p>
+
 This is an instance of using a mutex. Here, Millaine (the coder) first aquired the mutex, checked it's status, did her operations, and then released the mutex.
 
-// insert image
+<p align="center">
+<img src="../images/using-a-mutex.png" alt="Photo of what using a mutex looks like." width=20% >
+<p align="center">Photo of what using a mutex looks like.</p>
+</p>
 
 This is an example of using a flag. This flag was used to signal that something bad happened. Flags are useful and Millaine used them a lot in the MBMS code.
 
-// insert image
+<p align="center">
+<img src="../images/using-a-flag.png" alt="Photo of what using a flag looks like." width=20% >
+<p align="center">Photo of what using a flag looks like.</p>
+</p>
 
-So for tasks, what you're doing is you're making functions. In this example, we have a BatteryControlTask, CANMessageSenderTask, CANRxGatekeeperTask, etc. Don't worry about what these names mean right now. Just focus that they're files storing some functions. All of these files are always running. They have an infinite while loop at the top. 
+So for tasks, what you're doing is you're making functions. In this example, we have a BatteryControlTask, CANMessageSenderTask, CANRxGatekeeperTask, etc. Don't worry about what these names mean right now. Just focus that they're files storing some functions.
 
-// insert image
+<p align="center">
+<img src="../images/file-tasks.png" alt="Photo of what the files looks like." width=20% >
+<p align="center">Photo of what the files looks like.</p>
+</p>
+
+All of these files are always running. They have an infinite while loop at the top. You have to put that there.
+
+<p align="center">
+<img src="../images/while_loop.png" alt="Photo of what the while loop looks like." width=20% >
+<p align="center">Photo of what the while loop looks like.</p>
+</p>
 
 However, since all of them can't run at once, the one with the higher priority runs. These priorities are the ones you set in the main.c
 
