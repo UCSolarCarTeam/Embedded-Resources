@@ -60,19 +60,50 @@ Why use freeRTOS? When you have many tasks you want to run and want to meet timi
 
 Below is how to implement RTOS into your project. We're going to be looking at the MBMS code!
 
+You put the definitions for the threads (tasks), mutexes, and queues under private variables in the main.c:
+// image showing that
+
+Here you can set the priority of the task. This one is set to the normal priority. There are a bunch of different priority levels. To see them just hover over the (osPriority_t) cast.
+
+// insert image
+
+Here is the basis for defining mutexes as well:
+// insert image
+
+
+In the main(void) loop, you create the handles for your mutexes, queues, and flags. A handle is basically saying you don't need to worry about the specific of the resource, just use this handle to use it! 
+
+// insert 3 images
+
+You also start your tasks here. This is very important. Don't forget to start your task or your functions won't run! 
+
+This is an instance of using a mutex. Here, Millaine (the coder) first aquired the mutex, checked it's status, did her operations, and then released the mutex.
+
+// insert image
+
+This is an example of using a flag. This flag was used to signal that something bad happened. Flags are useful and Millaine used them a lot in the MBMS code.
+
+// insert image
+
+So for tasks, what you're doing is you're making functions. In this example, we have a BatteryControlTask, CANMessageSenderTask, CANRxGatekeeperTask, etc. Don't worry about what these names mean right now. Just focus that they're files storing some functions. All of these files are always running. They have an infinite while loop at the top. 
+
+// insert image
+
+However, since all of them can't run at once, the one with the higher priority runs. These priorities are the ones you set in the main.c
+
+That's basically what tasks are. Good job, you completed this section! By the way, the code above helps set priorities of tasks so the car doesn't blow up! Imagine if the priority for shutting off the car when there's a fault was low, that wouldn't end well... I hope you see how important priorities are! 
+
+
 ## Terminology
 Task is similar to a thread
 
 A tick is 1 millisecond
 
-
-
-
 ## Embedded Example with an STM32
 
-Last Updated: September 13, 2025
+Last Updated: October 1, 2025
 
-Note: Working on it
+Note: Adding examples
 
 Author: Khadeeja Abbas
 
