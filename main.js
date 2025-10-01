@@ -2,6 +2,7 @@
 const markdownFiles = [
   { file: './markdown-files/adc.md', title: 'Analog-to-Digital Converter (ADC)' },
   { file: './markdown-files/SPI.md', title: 'SPI' },
+  { file: './markdown-files/CAN.md', title: 'CAN' },
 
   // ADD NEW MARKDOWN FILES HERE
 ];
