@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="../styles.css">
 ---
 # Controller Area Network (CAN)
 ----
