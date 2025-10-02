@@ -1,0 +1,73 @@
+.hamburger {
+  font-size: 2rem;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: white;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+#menu-toggle:hover {
+    color: #ff6666;
+}
+
+.sidebar {
+  position: fixed;
+  top: 1%;
+  left: -250px;
+  width: 250px;
+  height: 100%;
+  background-color: #333;
+  color: white;
+  overflow-y: auto;
+  transition: left 0.3s ease-in-out;
+  padding-top: 0rem;
+  z-index: 1000;
+}
+
+.sidebar.open {
+  left: 0;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar li {
+  padding: 1rem;
+  border-bottom: 1px solid #555;
+  cursor: pointer;
+}
+
+.sidebar li:hover {
+  background-color: #444;
+}
+
+#markdown-container {
+  margin-left: 0;
+  transition: margin-left 0.3s ease-in-out;
+  padding: 1rem;
+}
+
+.sidebar.open ~ #markdown-container {
+  margin-left: 250px;
+}
+
+.close-btn {
+  font-size: 2rem;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: block;
+  text-align: left;
+  margin: 1rem 1.5rem 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.close-btn:hover {
+  color: #ff6666;
+}
