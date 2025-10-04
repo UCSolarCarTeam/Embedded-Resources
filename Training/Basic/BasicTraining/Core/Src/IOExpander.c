@@ -1,3 +1,10 @@
+/*
+ * IOExpander.c
+ *
+ *  Created on: Oct 4, 2025
+ *      Author: Omar Hassan
+ */
+
 #include "IOExpander.h"
 #include "SPI_training.h"
 #include "main.h"
@@ -46,3 +53,4 @@ void IOE_SetPin(uint8_t pin, uint8_t state) {
 
     IOE_WriteReg(GPIOA, gpioState);
 }
+

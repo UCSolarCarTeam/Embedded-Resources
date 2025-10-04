@@ -1,5 +1,12 @@
-#ifndef IOEXPANDER_H
-#define IOEXPANDER_H
+/*
+ * IOExpander.h
+ *
+ *  Created on: Oct 4, 2025
+ *      Author: Omar Hassan
+ */
+
+#ifndef INC_IOEXPANDER_H_
+#define INC_IOEXPANDER_H_
 
 #include <stdint.h>
 
@@ -8,7 +15,7 @@
 #define DEVICE_OPCODE_READ   0x41   // A2:A0 pins in schematic tied to gnd
 
 // MCP23S17 register addresses (datasheet, Table 3-1)
-// assume IOCON.BANK = 0 
+// assume IOCON.BANK = 0
 #define IODIRA   0x00
 #define IODIRB   0x01
 #define GPIOA    0x12
@@ -21,4 +28,4 @@ uint8_t IOE_ReadReg(uint8_t reg);
 void IOE_SetLED(uint8_t ledMask);
 void IOE_SetPin(uint8_t pin, uint8_t state);
 
-#endif // IOEXPANDER_H
+#endif /* INC_IOEXPANDER_H_ */
