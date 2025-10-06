@@ -11,9 +11,9 @@
 extern I2C_HandleTypeDef hi2c1;
 
 HAL_StatusTypeDef accel_init(I2C_HandleTypeDef *hi2c) {
-    uint8_t id = 0; //who-am-i/chip identification reg
-    HAL_I2C_Mem_Read(hi2c, (ACCELEROMETER_DEVICE_ADDR << 1), 0x18, I2C_MEMADD_SIZE_8BIT, &id, 1, 100);
-    if (id != 0xA4)
+    uint8_t chip_id = 0; //who-am-i/chip identification reg
+    HAL_I2C_Mem_Read(hi2c, (ACCELEROMETER_DEVICE_ADDR << 1), 0x18, I2C_MEMADD_SIZE_8BIT, &chip_id, 1, 100);
+    if (chip_id != 0xA4)
     	return HAL_ERROR;
 
     uint8_t sample_rate = 0x09;  //100Hz
@@ -28,8 +28,8 @@ HAL_StatusTypeDef accel_init(I2C_HandleTypeDef *hi2c) {
 
 void accel_read_raw(int16_t *x, int16_t *y, int16_t *z) {
     uint8_t buffer[6];
-    HAL_StatusTypeDef st = HAL_I2C_Mem_Read(&hi2c1,(ACCELEROMETER_DEVICE_ADDR <<1),0x0D,I2C_MEMADD_SIZE_8BIT,buffer,6,100);
-    if (st != HAL_OK) {
+    HAL_StatusTypeDef status = HAL_I2C_Mem_Read(&hi2c1,(ACCELEROMETER_DEVICE_ADDR <<1),0x0D,I2C_MEMADD_SIZE_8BIT,buffer,6,100);
+    if (status != HAL_OK) {
         if (x) 
 			*x = 0;
         if (y) 
