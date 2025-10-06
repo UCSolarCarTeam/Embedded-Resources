@@ -22,7 +22,7 @@ HAL_StatusTypeDef accel_init(I2C_HandleTypeDef *hi2c) {
     uint8_t range_lpf = 0x00; //±2g
     HAL_I2C_Mem_Write(hi2c, (ACCELEROMETER_DEVICE_ADDR << 1), 0x20, I2C_MEMADD_SIZE_8BIT, &range_lpf, 1, 100);
 
-    uint8_t mode = 0x01; //wake up
+    uint8_t mode = 0x07; //mode reg
     HAL_I2C_Mem_Write(hi2c, (ACCELEROMETER_DEVICE_ADDR << 1), 0x07, I2C_MEMADD_SIZE_8BIT, &mode, 1, 100);
 
     return HAL_OK;
@@ -30,36 +30,52 @@ HAL_StatusTypeDef accel_init(I2C_HandleTypeDef *hi2c) {
 
 
 void accel_read_raw(int16_t *x, int16_t *y, int16_t *z) {
-    uint8_t buffer[6];
-    HAL_StatusTypeDef st = HAL_I2C_Mem_Read(&hi2c1,(ACCELEROMETER_DEVICE_ADDR <<1),0x0D,I2C_MEMADD_SIZE_8BIT,buffer,6,100);
-    if (st != HAL_OK) {
-        // On error, return zeros (or keep last values if you prefer)
-        if (x) *x = 0;
-        if (y) *y = 0;
-        if (z) *z = 0;
+	uint8_t buffer_x[2];
+	uint8_t buffer_y[2];
+	uint8_t buffer_z[2];
+
+    HAL_I2C_Mem_Read(&hi2c1,(ACCELEROMETER_DEVICE_ADDR <<1),0x0D,I2C_MEMADD_SIZE_8BIT,buffer_x,2,100);
+	HAL_I2C_Mem_Read(&hi2c1,(ACCELEROMETER_DEVICE_ADDR <<1),0x0F,I2C_MEMADD_SIZE_8BIT,buffer_y,2,100);
+	HAL_I2C_Mem_Read(&hi2c1,(ACCELEROMETER_DEVICE_ADDR <<1),0x11,I2C_MEMADD_SIZE_8BIT,buffer_z,2,100);
+
+    if (x)
+    	*x = (int16_t)((buffer_x[1] << 8) | buffer_x[0]);
+    if (y)
+    	*y = (int16_t)((buffer_y[1] << 8) | buffer_y[0]);
+    if (z)
+    	*z = (int16_t)((buffer_z[1] << 8) | buffer_z[0]);
+	/* or uint8_t buffer[6];
+	HAL_StatusTypeDef st = HAL_I2C_Mem_Read(&hi2c1,(ACCELEROMETER_DEVICE_ADDR <<1),0x0D,I2C_MEMADD_SIZE_8BIT,buffer,6,100); --> reading all 6 bytes sequentially
+        if (status != HAL_OK) { //set 0 if its not working (comunication failed or timed out)
+        if (x)
+			*x = 0;
+        if (y)
+			*y = 0;
+        if (z)
+			*z = 0;
         return;
-    }
+
     if (x)
     	*x = (int16_t)((buffer[1] << 8) | buffer[0]);
     if (y)
     	*y = (int16_t)((buffer[3] << 8) | buffer[2]);
     if (z)
     	*z = (int16_t)((buffer[5] << 8) | buffer[4]);
-
-    }
+	*/
+   }
 
 void accel_read_g(float *pos_xg, float *pos_yg, float *pos_zg) {
 	int16_t x_counts=0, y_counts=0, z_counts=0;
     accel_read_raw(&x_counts, &y_counts, &z_counts);
 
-    const float lsb_per_g = 16384.0f; //lsb for 2g
+    const float lsb_g = 16384.0f; //lsb for 2g
 
     if (pos_xg)
-    	*pos_xg = (float)x_counts / lsb_per_g;
+    	*pos_xg = (float)x_counts / lsb_g;
     if (pos_yg)
-    	*pos_yg = (float)y_counts / lsb_per_g;
+    	*pos_yg = (float)y_counts / lsb_g;
     if (pos_xg)
-    	*pos_zg = (float)z_counts / lsb_per_g;
+    	*pos_zg = (float)z_counts / lsb_g;
 }
 
 void accel_poll_data(float *pos_x, float *pos_y, float *pos_z) {

@@ -1,4 +1,4 @@
 ../Core/Src/accel.c:13:19:accel_init	40	static
-../Core/Src/accel.c:32:6:accel_read_raw	48	static
-../Core/Src/accel.c:51:6:accel_read_g	40	static
-../Core/Src/accel.c:65:6:accel_poll_data	40	static
+../Core/Src/accel.c:32:6:accel_read_raw	56	static
+../Core/Src/accel.c:67:6:accel_read_g	40	static
+../Core/Src/accel.c:81:6:accel_poll_data	40	static

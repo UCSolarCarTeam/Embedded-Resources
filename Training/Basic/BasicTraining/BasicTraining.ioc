@@ -381,3 +381,4 @@ VP_SYS_VS_Systick.Signal=SYS_VS_Systick
 VP_TIM3_VS_no_output1.Mode=PWM Generation1 No Output
 VP_TIM3_VS_no_output1.Signal=TIM3_VS_no_output1
 board=custom
+isbadioc=false
