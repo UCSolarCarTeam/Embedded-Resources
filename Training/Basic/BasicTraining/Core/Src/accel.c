@@ -30,15 +30,31 @@ HAL_StatusTypeDef accel_init(I2C_HandleTypeDef *hi2c) {
 
 
 void accel_read_raw(int16_t *x, int16_t *y, int16_t *z) {
-    uint8_t buffer[6];
-    HAL_StatusTypeDef st = HAL_I2C_Mem_Read(&hi2c1,(ACCELEROMETER_DEVICE_ADDR <<1),0x0D,I2C_MEMADD_SIZE_8BIT,buffer,6,100);
-    if (st != HAL_OK) {
-        // On error, return zeros (or keep last values if you prefer)
-        if (x) *x = 0;
-        if (y) *y = 0;
-        if (z) *z = 0;
+	uint8_t buffer_x[2];
+	uint8_t buffer_y[2];
+	uint8_t buffer_z[2];
+
+    HAL_I2C_Mem_Read(&hi2c1,(ACCELEROMETER_DEVICE_ADDR <<1),0x0D,I2C_MEMADD_SIZE_8BIT,buffer_x,2,100);
+	HAL_I2C_Mem_Read(&hi2c1,(ACCELEROMETER_DEVICE_ADDR <<1),0x0F,I2C_MEMADD_SIZE_8BIT,buffer_y,2,100);
+	HAL_I2C_Mem_Read(&hi2c1,(ACCELEROMETER_DEVICE_ADDR <<1),0x11,I2C_MEMADD_SIZE_8BIT,buffer_z,2,100);
+
+    if (x)
+    	*x = (int16_t)((buffer_x[1] << 8) | buffer_x[0]);
+    if (y)
+    	*y = (int16_t)((buffer_y[1] << 8) | buffer_y[0]);
+    if (z)
+    	*z = (int16_t)((buffer_z[1] << 8) | buffer_z[0]);
+	/* or uint8_t buffer[6];
+	HAL_StatusTypeDef st = HAL_I2C_Mem_Read(&hi2c1,(ACCELEROMETER_DEVICE_ADDR <<1),0x0D,I2C_MEMADD_SIZE_8BIT,buffer,6,100); --> reading all 6 bytes sequentially
+        if (status != HAL_OK) { //set 0 if its not working (comunication failed or timed out)
+        if (x)
+			*x = 0;
+        if (y)
+			*y = 0;
+        if (z)
+			*z = 0;
         return;
-    }
+
     if (x)
     	*x = (int16_t)((buffer[1] << 8) | buffer[0]);
     if (y)
