@@ -22,7 +22,7 @@ HAL_StatusTypeDef accel_init(I2C_HandleTypeDef *hi2c) {
     uint8_t range_lpf = 0x00; //±2g
     HAL_I2C_Mem_Write(hi2c, (ACCELEROMETER_DEVICE_ADDR << 1), 0x20, I2C_MEMADD_SIZE_8BIT, &range_lpf, 1, 100);
 
-    uint8_t mode = 0x07; //mode
+    uint8_t mode = 0x07; //mode reg
     HAL_I2C_Mem_Write(hi2c, (ACCELEROMETER_DEVICE_ADDR << 1), 0x07, I2C_MEMADD_SIZE_8BIT, &mode, 1, 100);
 
     return HAL_OK;
