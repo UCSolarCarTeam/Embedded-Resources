@@ -190,7 +190,7 @@ HAL_StatusTypeDef accel_init(I2C_HandleTypeDef *hi2c) {
 }
 ```
 ## Your Task: 
-Read the rest of the code in the .c file, follow the inline comments, and complete the remaining sections accordingly.
+Read the rest of the code in the accel.c file, follow the inline comments, and complete the remaining sections accordingly.
 
 ## Useful Links:
 
