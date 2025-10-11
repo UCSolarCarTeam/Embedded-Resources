@@ -33,51 +33,20 @@ void accel_read_raw(int16_t *x, int16_t *y, int16_t *z) {
 	uint16_t buffer_x[1];
 	uint16_t buffer_y[1];
 	uint16_t buffer_z[1];
+	/* use the HAL_I2C_Mem_Read function to read the accelerometer output registers for the X, Y, and Z axes. 
+	The data for each axis is stored in two consecutive registers, one for the lower byte and one for the 
+	upper byte. The X axis values start at register 0x0D, the Y axis values at 0x0F, and the Z axis values 
+	at 0x11. */
+	//Start Code Here
 
-    HAL_I2C_Mem_Read(&hi2c1,(ACCELEROMETER_DEVICE_ADDR <<1),0x0D,I2C_MEMADD_SIZE_16BIT,buffer_x,1,100);
-	HAL_I2C_Mem_Read(&hi2c1,(ACCELEROMETER_DEVICE_ADDR <<1),0x0F,I2C_MEMADD_SIZE_16BIT,buffer_y,1,100);
-	HAL_I2C_Mem_Read(&hi2c1,(ACCELEROMETER_DEVICE_ADDR <<1),0x11,I2C_MEMADD_SIZE_16BIT,buffer_z,1,100);
 
+	//End Here
     if (x)
     	*x = (int16_t)((buffer_x[0]);
     if (y)
     	*y = (int16_t)((buffer_y[0]);
     if (z)
     	*z = (int16_t)((buffer_z[0]);
-	/*
-	void accel_read_raw(int16_t *x, int16_t *y, int16_t *z) {
-	uint8_t buffer_x[2];
-	uint8_t buffer_y[2];
-	uint8_t buffer_z[2];
-
-    HAL_I2C_Mem_Read(&hi2c1,(ACCELEROMETER_DEVICE_ADDR <<1),0x0D,I2C_MEMADD_SIZE_8BIT,buffer_x,2,100);
-	HAL_I2C_Mem_Read(&hi2c1,(ACCELEROMETER_DEVICE_ADDR <<1),0x0F,I2C_MEMADD_SIZE_8BIT,buffer_y,2,100);
-	HAL_I2C_Mem_Read(&hi2c1,(ACCELEROMETER_DEVICE_ADDR <<1),0x11,I2C_MEMADD_SIZE_8BIT,buffer_z,2,100);
-
-    if (x)
-    	*x = (int16_t)((buffer_x[1] << 8) | buffer_x[0]);
-    if (y)
-    	*y = (int16_t)((buffer_y[1] << 8) | buffer_y[0]);
-    if (z)
-    	*z = (int16_t)((buffer_z[1] << 8) | buffer_z[0]); }
-	or uint8_t buffer[6];
-	HAL_StatusTypeDef st = HAL_I2C_Mem_Read(&hi2c1,(ACCELEROMETER_DEVICE_ADDR <<1),0x0D,I2C_MEMADD_SIZE_8BIT,buffer,6,100); --> reading all 6 bytes sequentially
-        if (status != HAL_OK) { //set 0 if its not working (comunication failed or timed out)
-        if (x)
-			*x = 0;
-        if (y)
-			*y = 0;
-        if (z)
-			*z = 0;
-        return;
-
-    if (x)
-    	*x = (int16_t)((buffer[1] << 8) | buffer[0]);
-    if (y)
-    	*y = (int16_t)((buffer[3] << 8) | buffer[2]);
-    if (z)
-    	*z = (int16_t)((buffer[5] << 8) | buffer[4]);
-	*/
    }
 
 void accel_read_g(float *pos_xg, float *pos_yg, float *pos_zg) {
@@ -97,11 +66,8 @@ void accel_read_g(float *pos_xg, float *pos_yg, float *pos_zg) {
 void accel_poll_data(float *pos_x, float *pos_y, float *pos_z) {
     float pos_xg=0.0f, pos_yg=0.0f, pos_zg=0.0f;
     accel_read_g(&pos_xg, &pos_yg, &pos_zg);
+	/* Convert each axis from g to m/s^2 (note: 1 g = 9.80665 m/s^2) */
+	//Start Code here:
 
-    if (pos_x)
-    	*pos_x = pos_xg * 9.81;
-    if (pos_y)
-    	*pos_y = pos_yg * 9.81;
-    if (pos_z)
-    	*pos_z = pos_zg * 9.81;
+	//End Here
 }
