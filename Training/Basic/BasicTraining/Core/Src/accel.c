@@ -42,11 +42,11 @@ void accel_read_raw(int16_t *x, int16_t *y, int16_t *z) {
 
 	//End Here
     if (x)
-    	*x = (int16_t)((buffer_x[0]);
+    	*x = (int16_t)(buffer_x[0]);
     if (y)
-    	*y = (int16_t)((buffer_y[0]);
+    	*y = (int16_t)(buffer_y[0]);
     if (z)
-    	*z = (int16_t)((buffer_z[0]);
+    	*z = (int16_t)(buffer_z[0]);
    }
 
 void accel_read_g(float *pos_xg, float *pos_yg, float *pos_zg) {
