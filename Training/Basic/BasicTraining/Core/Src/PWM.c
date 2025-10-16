@@ -7,6 +7,8 @@
 
 #include "PWM.h"
 #include "main.h"
+#include "stm32h5xx_hal_tim.h"
+#include "tim.h"
 
 /*
  * Exercise 1: Change the brightness of an LED using PWM
@@ -28,12 +30,13 @@
  *
  * Some useful functions:
  * HAL_TIM_PWM_Start(&htimx, TIM_CHANNEL_x)
- *
+ * The register for the period is ARR, and the register for the pulse width is CCR1
+ * So for example, to set a value for the pulse width value of TIM2 to 5 you would do:
+ * TIM2 -> CCR1 = 5;
  *
  */
 
 
-// um test
 
 void PWM() {
 
