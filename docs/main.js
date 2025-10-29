@@ -6,6 +6,7 @@ const markdownFiles = [
   { file: "./markdown-files/adc.md", title: "Analog-to-Digital Converter (ADC)" },
   { file: "./markdown-files/SPI.md", title: "Serial Peripheral Interface (SPI)" },
   { file: './markdown-files/CAN.md', title: 'Controller Area Network (CAN)' },
+  { file: "./markdown-files/RTOS.md", title: "Real-Time Operating System (RTOS)" },
   // ADD NEW MARKDOWN FILES HERE
 ];
 
