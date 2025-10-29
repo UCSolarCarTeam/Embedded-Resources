@@ -1,8 +1,6 @@
-<link rel="stylesheet" href="../styles.css">
-
+---
 # RTOS ⏰
-Real-Time Operating System (RTOS)
-
+---
 
 ## Operating Systems
 You've probably heard of the following operating systems: Mac, Windows, IOS, Android. These are **systems that run on your computer or microcontroller** that **manage when tasks** are executed such as opening Chrome, manage reading and writing to files, and interacting with external devices. Imagine if we didn't have operating systems to do these tasks. If you wanted to open Chrome to Google something, your device wouldn't know what task to prioritize. Should it prioritize moving your cursor, download that app you wanted, or open the browser? **With all this confusion, we can expect one thing: lag!** No one likes lag, that's why we use operating systems to manage our tasks.
