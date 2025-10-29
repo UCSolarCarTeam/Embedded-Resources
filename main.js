@@ -1,56 +1,64 @@
-// List of markdown files to load and render
+import { populateMarkdownList } from "./hamburger.js";
+
 const markdownFiles = [
-  { file: './markdown-files/test.md', title: 'TeStinG' },
-  { file: './markdown-files/another-test.md', title: 'T E S T 2' },
-  { file: './markdown-files/adc.md', title: 'Analog-to-Digital Converter (ADC)' },
+  { file: "./markdown-files/homepage.md", title: "Home" },
+  { file: "./markdown-files/I2C.md", title: "Inter-Integrated Circuit (I2C)" },
+  { file: "./markdown-files/adc.md", title: "Analog-to-Digital Converter (ADC)" },
+  { file: "./markdown-files/SPI.md", title: "Serial Peripheral Interface (SPI)" },
+  { file: './markdown-files/CAN.md', title: 'Controller Area Network (CAN)' },
   // ADD NEW MARKDOWN FILES HERE
 ];
+
+const REPO_IMAGE_BASE = "https://ucsolarcarteam.github.io/Embedded-Resources/images";
+
+const fixImagePaths = (mdText) => {
+  // Replace ../images/... with link to images in the repo
+  return mdText.replace(/\.\.\/images\//g, `${REPO_IMAGE_BASE}/`);
+};
 
 // Load the Markdown parser (e.g., marked.js)
 const loadMarkdownParser = () => {
   return new Promise((resolve, reject) => {
-    const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/marked/marked.min.js';
+    const script = document.createElement("script");
+    script.src = "https://cdn.jsdelivr.net/npm/marked/marked.min.js";
     script.onload = resolve;
     script.onerror = reject;
     document.head.appendChild(script);
   });
 };
 
-const renderMarkdownFiles = async () => {
+const renderMarkdownFile = async (file) => {
   await loadMarkdownParser();
 
   marked.setOptions({
     gfm: true,
     breaks: true,
     headerIds: false,
-    mangle: false
+    mangle: false,
   });
-  
-  const container = document.getElementById('markdown-container');
 
-  for (const { file, title } of markdownFiles) {
-    try {
-      //const res = await fetch(file); // this was doms line, the below is from chat bc it wouldnt refresh my changes :(
-      const res = await fetch(`${file}?t=${Date.now()}`);
-      if (!res.ok) throw new Error(`Failed to load ${file}`);
-      const mdText = await res.text();
-      const html = marked.parse(mdText);
+  const container = document.getElementById("markdown-container");
+  container.innerHTML = ""; // clear previous content
 
-      const details = document.createElement('details');
-      const summary = document.createElement('summary');
-      summary.textContent = title;
-      details.appendChild(summary);
+  try {
+    const res = await fetch(`${file}?t=${Date.now()}`);
+    if (!res.ok) throw new Error(`Failed to load ${file}`);
 
-      const contentDiv = document.createElement('div');
-      contentDiv.innerHTML = html;
-      details.appendChild(contentDiv);
+    let mdText = await res.text();
+    mdText = fixImagePaths(mdText);
+    const html = marked.parse(mdText);
 
-      container.appendChild(details);
-    } catch (err) {
-      console.error(err);
-    }
+    container.innerHTML = html; // Directly render markdown content
+  } catch (err) {
+    console.error(err);
+    container.innerHTML = `<p>Error loading file: ${err.message}</p>`;
   }
 };
 
-renderMarkdownFiles();
+// Populate the sidebar with file titles
+populateMarkdownList(markdownFiles, ({ file }) => renderMarkdownFile(file));
+
+// Load the first file by default
+if (markdownFiles.length > 0) {
+  renderMarkdownFile(markdownFiles[0].file);
+}
