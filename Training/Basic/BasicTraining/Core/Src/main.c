@@ -22,7 +22,6 @@
 #include "dac.h"
 #include "fdcan.h"
 #include "i2c.h"
-#include "accel.h"
 #include "spi.h"
 #include "tim.h"
 #include "usart.h"
@@ -111,14 +110,10 @@ int main(void)
 
   /* USER CODE END 2 */
 
-
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-       float x, y, z;
-       accel_poll_data(&x,&y,&z);
-
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
