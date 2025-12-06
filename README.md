@@ -61,6 +61,7 @@ Prepares staged write buffers
 
 Usage Examples
 Turn GPA0 ON/OFF (basic blinking)
+```c
 while(1)
 {
     IOE_SetPin(P00, IOE_HIGH);   // LED on GPA0 ON
@@ -71,18 +72,21 @@ while(1)
     IOE_Commit();
     HAL_Delay(500);
 }
+```
 
 Same thing but in one call
 
 (uses Now version — sets and commits automatically)
+```c
 IOE_SetPinNow(P00, IOE_HIGH);
 HAL_Delay(500);
 
 IOE_SetPinNow(P00, IOE_LOW);
 HAL_Delay(500);
+```
 
 Full API Documentation
-void IOE_Init(SPI_HandleTypeDef *hspi, GPIO_TypeDef *cs_port, uint16_t cs_pin);
+`void IOE_Init(SPI_HandleTypeDef *hspi, GPIO_TypeDef *cs_port, uint16_t cs_pin);`
 
 Initializes SPI handle + chip-select pin and configures MCP23S17 direction registers.
 
@@ -92,37 +96,39 @@ bool IOE_SetPin(IOExpanderPin pin, IOState state);
 Stages a pin change (but does not send it yet).
 
 Example:
+```c
 IOE_SetPin(P00, IOE_HIGH); // prepare ON
 IOE_SetPin(P01, IOE_LOW);  // prepare OFF
 IOE_Commit();              // send both together
+```
 
-bool IOE_SetPinNow(IOExpanderPin pin, IOState state);
+`bool IOE_SetPinNow(IOExpanderPin pin, IOState state);`
 
 Sets a pin and commits immediately.
 
-bool IOE_TogglePin(IOExpanderPin pin);
+`bool IOE_TogglePin(IOExpanderPin pin);`
 
 Stages a toggle of a pin bit.
 
-bool IOE_TogglePinNow(IOExpanderPin pin);
+`bool IOE_TogglePinNow(IOExpanderPin pin);`
 
 Toggles and commits immediately.
 
-bool IOE_Commit(void);
+`bool IOE_Commit(void);`
 
 Sends all staged changes to both GPIOA and GPIOB registers.
 
 Read Functions
-bool IOE_Update(void);
+`bool IOE_Update(void);`
 
 Reads both GPIOA + GPIOB and stores the values in an internal buffer.
 
-IOState IOE_GetPinState(IOExpanderPin pin);
+`IOState IOE_GetPinState(IOExpanderPin pin);`
 
 Returns last cached read state.
 Useful when you do not need real-time accuracy.
 
-IOState IOE_GetPinStateNow(IOExpanderPin pin);
+`IOState IOE_GetPinStateNow(IOExpanderPin pin);`
 
 Performs an immediate SPI read and returns the true state.
 
@@ -135,10 +141,11 @@ IODIRA = 0x00 (all A pins outputs)
 IODIRB = 0x00 (all B pins outputs)
 
 If you want input support later, you can add:
-IOE_WriteReg(IODIRA, 0xFF);  // All inputs
+`IOE_WriteReg(IODIRA, 0xFF);  // All inputs`
 
 
 Example Minimal Main.c
+```c
 HAL_Init();
 SystemClock_Config();
 
@@ -155,7 +162,7 @@ while(1)
     IOE_SetPinNow(P00, IOE_LOW);
     HAL_Delay(250);
 }
-
+```
 Summary
 
 This driver provides:
