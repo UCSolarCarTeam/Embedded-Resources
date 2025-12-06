@@ -177,12 +177,3 @@ Cached + instant reads
 
 Simple enums for all 16 pins
 
-You now have a professional driver suitable for:
-
-LEDs
-
-Relays
-
-Keyboards
-
-Digital control boards
