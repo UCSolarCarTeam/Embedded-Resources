@@ -1,0 +1,13 @@
+../Core/Src/IOExpander.c:31:13:CS_LOW	8	static
+../Core/Src/IOExpander.c:32:13:CS_HIGH	8	static
+../Core/Src/IOExpander.c:35:13:IOE_WriteReg	16	static
+../Core/Src/IOExpander.c:43:16:IOE_ReadReg	24	static
+../Core/Src/IOExpander.c:54:6:IOE_Init	24	static
+../Core/Src/IOExpander.c:69:6:IOE_SetPin	24	static
+../Core/Src/IOExpander.c:81:6:IOE_SetPinNow	16	static
+../Core/Src/IOExpander.c:86:6:IOE_TogglePin	24	static
+../Core/Src/IOExpander.c:93:6:IOE_TogglePinNow	16	static
+../Core/Src/IOExpander.c:98:6:IOE_Commit	8	static
+../Core/Src/IOExpander.c:108:6:IOE_Update	8	static
+../Core/Src/IOExpander.c:114:9:IOE_GetPinState	24	static
+../Core/Src/IOExpander.c:120:9:IOE_GetPinStateNow	16	static
