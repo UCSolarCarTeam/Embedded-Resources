@@ -18,10 +18,9 @@ Real-time operating systems, focusing on FreeRTOS, task scheduling, inter-task c
 
 ## Getting Started
 
-If you fancy yourself a ***Git Master***, go ahead and create a new branch from `Training2026` named after yourself, followed by *"-training"*. For example:
+If you fancy yourself a ***Git Master***, go ahead and create a new branch from `main` named after yourself, followed by *"-training"*. For example:
 
 ```
-git switch Training2026
 git switch -c nathan-training
 ```
 
