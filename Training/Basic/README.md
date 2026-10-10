@@ -25,7 +25,7 @@ Basic/
 
 ## How it works
 
-1. Read the lesson (`lessonN.md`).
+1. Read the lesson (`README.md`) in each Lesson folder.
 2. Open an exercise file. It has function stubs marked `TODO`.
 3. Fill in the functions, then build and run the exercise. The tests at the bottom of the file tell you what passes and what fails. **Don't edit the tests.**
 
