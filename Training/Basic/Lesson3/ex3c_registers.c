@@ -20,25 +20,27 @@ typedef struct {
 /* Drive pin high. Don't change any other pin. */
 void gpio_set_pin(GpioRegs *g, unsigned pin)
 {
-    /* TODO */
+    g->ODR |= (1u << pin);
 }
 
 /* Drive pin low. Don't change any other pin. */
 void gpio_clear_pin(GpioRegs *g, unsigned pin)
 {
-    /* TODO */
+    g->ODR &= ~(1u << pin);
 }
 
 /* Flip the output level of pin. */
 void gpio_toggle_pin(GpioRegs *g, unsigned pin)
 {
-    /* TODO */
+    g->ODR ^= (1u << pin);
 }
 
 /* Return the level of pin as read from IDR. */
 bool gpio_read_pin(const GpioRegs *g, unsigned pin)
 {
-    return false; /* TODO */
+    bool read;
+    read = (g->IDR & (1u << pin));
+    return read; 
 }
 
 /* ---- Part B: a write-1-to-clear status register ----
@@ -63,13 +65,16 @@ void status_write(uint8_t v)
 /* Clear ONLY the ERROR flag, using status_write(). */
 void ack_error(void)
 {
-    /* TODO */
+    status_write(1u << 3);
 }
 
 /* Return true if the given flag is set in the status register. */
 bool status_has(uint8_t flag)
 {
-    return false; /* TODO */
+    sim_status = status_read();
+    if (sim_status & flag)
+        return true;
+    return false;
 }
 
 /* ---- TESTS (do not edit below) ---- */
