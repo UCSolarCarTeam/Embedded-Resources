@@ -12,25 +12,49 @@
 void swap_u8(uint8_t *a, uint8_t *b)
 {
     /* TODO */
+    uint8_t temporary = *a;
+    *a = *b;
+    *b = temporary;
 }
 
 /* Compute a / b and a % b. Store them through quot and rem. Assume b != 0. */
 void divmod_u32(uint32_t a, uint32_t b, uint32_t *quot, uint32_t *rem)
 {
     /* TODO */
+    *quot = a / b;
+    *rem = a % b;
 }
 
 /* Find the smallest and largest value in arr[0..n-1] and store them through
  * min and max. Return false if n == 0 (and change nothing), otherwise true. */
 bool min_max_i16(const int16_t *arr, size_t n, int16_t *min, int16_t *max)
 {
-    return false; /* TODO */
+    if (n == 0) {
+        return false;
+    }
+     /* TODO */
+     int16_t minimum = *arr;
+     int16_t maximum = *arr;
+     for (size_t i = 1; i < n; i++) {
+         if (arr[i] < minimum) {
+             minimum = arr[i];
+         }
+         if (arr[i] > maximum) {
+             maximum = arr[i];
+         }
+     }
+     *min = minimum;
+     *max = maximum;
+     return true;
 }
 
 /* Add 1 to every element of arr (wrapping at 256). */
 void increment_all(uint8_t *arr, size_t n)
 {
     /* TODO */
+    for(size_t i = 0; i < n; i++){
+        arr[i]++;
+    }
 }
 
 /* ---- TESTS (do not edit below) ---- */

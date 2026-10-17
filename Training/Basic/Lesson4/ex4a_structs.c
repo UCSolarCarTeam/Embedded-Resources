@@ -19,34 +19,53 @@ typedef struct {
 Reading make_reading(uint8_t id, int16_t temp_c10, uint8_t humidity)
 {
     Reading r = {0, 0, 0};
+    r.id = id;
+    r.temp_c10 = temp_c10;
+    r.humidity = humidity;
     return r; /* TODO: fill in the fields from the parameters */
 }
 
 /* Change the temperature of the reading that r points to. (Use ->) */
 void reading_set_temp(Reading *r, int16_t temp_c10)
 {
-    /* TODO */
+    r->temp_c10 = temp_c10; /* TODO */
 }
 
 /* A reading is valid if humidity is 0 to 100 AND temp_c10 is between
  * -400 and 850 (both ends included). */
 bool reading_is_valid(const Reading *r)
 {
-    return false; /* TODO */
+    return r->humidity <= 100 && r->temp_c10 >= -400 && r->temp_c10 <= 850; /* TODO */
 }
 
 /* Average temp_c10 of the first n readings, using plain integer division.
  * Return 0 if n is 0. */
 int16_t average_temp(const Reading *readings, size_t n)
 {
-    return 99; /* TODO */
+    if (n == 0) {
+        return 0;
+    }
+    int16_t sum = 0;
+    for (size_t i = 0; i < n; i++) {
+        sum += readings[i].temp_c10;
+    }
+    return sum / n ; /* TODO */
 }
 
 /* Return a POINTER to the reading with the highest temp_c10
  * (the first one if there is a tie). Return NULL if n is 0. */
 const Reading *hottest(const Reading *readings, size_t n)
 {
-    return NULL; /* TODO */
+    if (n == 0) {
+        return NULL;
+    }
+    const Reading *h = &readings[0];
+    for (size_t i = 1; i < n; i++) {
+        if (readings[i].temp_c10 > h->temp_c10) {
+            h = &readings[i];
+        }
+    }
+    return h; /* TODO */
 }
 
 /* ---- TESTS (do not edit below) ---- */

@@ -11,24 +11,42 @@
 void fill_bytes(uint8_t *buf, size_t len, uint8_t value)
 {
     /* TODO */
+    for(size_t i = 0; i < len; i++){
+        buf[i] = value;
+    }
+
 }
 
 /* Sum of all bytes, modulo 256 (so it fits in a uint8_t). */
 uint8_t checksum8(const uint8_t *buf, size_t len)
 {
-    return 0xFF; /* TODO */
+    uint8_t sum = 0;
+    for (size_t i = 0; i < len; i++) {
+        sum += buf[i];
+    }
+    return sum; /* TODO */
 }
 
 /* Index of the first element equal to value, or -1 if there is none. */
 int find_first(const uint8_t *buf, size_t len, uint8_t value)
 {
-    return -2; /* TODO */
+    for (size_t i = 0; i < len; i++) {
+        if (buf[i] == value) {
+            return (int)i;
+        }
+    }
+    return -1; /* TODO */
 }
 
 /* Reverse the buffer in place. Must work for odd and even lengths. */
 void reverse_in_place(uint8_t *buf, size_t len)
 {
     /* TODO */
+    for (size_t i = 0; i < len / 2; i++) {
+        uint8_t temporary = buf[i];
+        buf[i] = buf[len - 1 - i];
+        buf[len - 1 - i] = temporary;
+    }
 }
 
 /* ---- TESTS (do not edit below) ---- */

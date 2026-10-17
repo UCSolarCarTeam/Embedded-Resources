@@ -13,7 +13,7 @@
  * get_field(0xABCD, 4, 8) -> 0xBC */
 uint32_t get_field(uint32_t reg, unsigned shift, unsigned width)
 {
-    return 1; /* TODO */
+    return (reg >> shift) & ((1u << width) - 1u); /* TODO */
 }
 
 /* Return reg with the field replaced by `value`.
@@ -22,7 +22,10 @@ uint32_t get_field(uint32_t reg, unsigned shift, unsigned width)
  * set_field(0xFFFF0000, 8, 4, 0x5) -> 0xFFFF0500 */
 uint32_t set_field(uint32_t reg, unsigned shift, unsigned width, uint32_t value)
 {
-    return 1; /* TODO */
+    uint32_t mask = (1u << width) - 1u;
+    reg &= ~(mask << shift);              
+    reg |= (value & mask) << shift;       
+    return reg; /* TODO */
 }
 
 /* ---- A made-up control register ----
@@ -34,19 +37,19 @@ uint32_t set_field(uint32_t reg, unsigned shift, unsigned width, uint32_t value)
 /* Read the prescaler. */
 uint32_t ctrl_get_prescaler(uint32_t ctrl)
 {
-    return 99; /* TODO */
+    return get_field(ctrl, 4, 3); /* TODO */
 }
 
 /* Set the prescaler, leaving every other bit alone. */
 uint32_t ctrl_set_prescaler(uint32_t ctrl, uint32_t p)
 {
-    return 1; /* TODO */
+    return set_field(ctrl, 4, 3, p); /* TODO */
 }
 
 /* Set the EN bit, leaving every other bit alone. */
 uint32_t ctrl_enable(uint32_t ctrl)
 {
-    return 1; /* TODO */
+    return set_field(ctrl, 7, 1, 1); /* TODO */
 }
 
 /* ---- TESTS (do not edit below) ---- */
