@@ -1,4 +1,4 @@
-# Solar Car Embedded Systems: Peripheral Training
+# Solar Car Embedded Systems: Intermediate Training
 
 Welcome! In this training you will learn how a microcontroller talks to the outside world: blinking an LED
 (**GPIO**), reading a sensor (**I2C**), controlling a chip over **SPI**, and sending text to your computer
@@ -239,5 +239,4 @@ and for later: [EXTI (external interrupts)](https://wiki.st.com/stm32mcu/wiki/Ge
 [TIM (timers)](https://wiki.st.com/stm32mcu/wiki/Getting_started_with_TIM),
 [ADC](https://wiki.st.com/stm32mcu/wiki/Getting_started_with_ADC).
 
-Also keep these open while you work: the **MC3479 datasheet**, the **MCP23S17 datasheet**, the
-**STM32H503 datasheet and reference manual**, and the **board schematic**.
+Also keep these open while you work: the [MC3479 datasheet](https://www.memsic.com/Public/Uploads/uploadfile/files/20220522/MC3479Datasheet(APS-048-0072v1.2).pdf), the [MCP23S17 datasheet](https://ww1.microchip.com/downloads/aemDocuments/documents/APID/ProductDocuments/DataSheets/MCP23017-MCP23S17-16-Bit-IO-Expander-with-Serial-Interface-DS20001952.pdf), and the **board schematic**.
