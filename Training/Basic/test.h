@@ -31,8 +31,10 @@ static int g_failed = 0;
             printf("  FAIL (line %d): %s\n"                             \
                    "        expected %lld, got %lld\n",                 \
                    __LINE__, #actual, e_, a_);                          \
-        }                                                               \
-    } while (0)
+        } else {							\
+	    printf("  PASSED TEST\n");					\
+	}								\
+    } while (0)								
 
 #define CHECK_STR(actual, expected)                                     \
     do {                                                                \
@@ -43,8 +45,10 @@ static int g_failed = 0;
             printf("  FAIL (line %d): %s\n"                             \
                    "        expected \"%s\", got \"%s\"\n",             \
                    __LINE__, #actual, (expected), as_);                 \
-        }                                                               \
-    } while (0)
+        } else {							\
+	    printf("  PASSED TEST\n");					\
+	}								\
+    } while (0)								
 
 static int report(void)
 {
