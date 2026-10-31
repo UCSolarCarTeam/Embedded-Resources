@@ -10,25 +10,52 @@
 /* Set every byte of buf[0..len-1] to value. */
 void fill_bytes(uint8_t *buf, size_t len, uint8_t value)
 {
-    /* TODO */
+    size_t i;
+    for (i = 0; i < len; i++){
+        *(buf + i) = value;
+    }
+    return;
 }
 
 /* Sum of all bytes, modulo 256 (so it fits in a uint8_t). */
 uint8_t checksum8(const uint8_t *buf, size_t len)
 {
-    return 0xFF; /* TODO */
+    int sum = 0;
+    for (size_t i = 0; i < len; i++) {
+        sum += *(buf + i);
+    }
+    return (uint8_t)(sum % 256); /* TODO */
 }
 
 /* Index of the first element equal to value, or -1 if there is none. */
 int find_first(const uint8_t *buf, size_t len, uint8_t value)
 {
-    return -2; /* TODO */
+    for (size_t i = 0; i < len; i++) {
+        if (*(buf + i) == value){
+            return i;
+        }
+        else{
+            continue;
+        }
+    }
+    return -1; /* TODO */
 }
 
 /* Reverse the buffer in place. Must work for odd and even lengths. */
 void reverse_in_place(uint8_t *buf, size_t len)
 {
-    /* TODO */
+    if (len == 0) {
+            return;
+        }
+    size_t i = 0;
+    size_t j = len - 1;
+    while (i < j){
+        uint8_t tmp = buf[i];
+        buf[i] = buf[j];
+        buf[j] = tmp;
+        i++;
+        j++;
+        }
 }
 
 /* ---- TESTS (do not edit below) ---- */
