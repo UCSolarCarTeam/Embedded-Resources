@@ -13,16 +13,16 @@
 #include "test.h"
 
 static const long long answers[10] = {
-    /* Q1  */ TODO,  /* uint8_t a = 200, b = 100;  int s = a + b;               -> s */
-    /* Q2  */ TODO,  /* uint8_t a = 200, b = 100;  uint8_t s = a + b;           -> s */
-    /* Q3  */ TODO,  /* int8_t x = -1;  uint8_t y = (uint8_t)x;                 -> y */
-    /* Q4  */ TODO,  /* uint8_t x = 255;  x++;                                  -> x */
-    /* Q5  */ TODO,  /* int r = 7 / 2;                                          -> r */
-    /* Q6  */ TODO,  /* int r = -7 / 2;                                         -> r */
-    /* Q7  */ TODO,  /* uint32_t u = 5;  int32_t s = -10;  int r = (u + s) > 0; -> r (0 or 1) */
-    /* Q8  */ TODO,  /* uint16_t x = 0xFFFF;  int r = x + 1;                    -> r */
-    /* Q9  */ TODO,  /* uint8_t x = 0x0F;  uint8_t r = ~x;                      -> r */
-    /* Q10 */ TODO,  /* int r = 1 << 4 | 1;                                     -> r */
+    /* Q1  */ 300,  /* uint8_t a = 200, b = 100;  int s = a + b;               -> s */
+    /* Q2  */ 44,  /* uint8_t a = 200, b = 100;  uint8_t s = a + b;           -> s */
+    /* Q3  */ 255,  /* int8_t x = -1;  uint8_t y = (uint8_t)x;                 -> y */
+    /* Q4  */ 0,  /* uint8_t x = 255;  x++;                                  -> x */
+    /* Q5  */ 3,  /* int r = 7 / 2;                                          -> r */
+    /* Q6  */ -3,  /* int r = -7 / 2;                                         -> r */
+    /* Q7  */ 1,  /* uint32_t u = 5;  int32_t s = -10;  int r = (u + s) > 0; -> r (0 or 1) */
+    /* Q8  */ 65536,  /* uint16_t x = 0xFFFF;  int r = x + 1;                    -> r */
+    /* Q9  */ 240,  /* uint8_t x = 0x0F;  uint8_t r = ~x;                      -> r */
+    /* Q10 */ 17,  /* int r = 1 << 4 | 1;                                     -> r */
 };
 
 #define A(n) answers[(n) - 1]

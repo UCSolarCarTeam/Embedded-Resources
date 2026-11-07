@@ -11,37 +11,47 @@
 /* Return v with bit n set. */
 uint32_t set_bit(uint32_t v, unsigned n)
 {
-    return 0; /* TODO */
+    return ((v>>n)|1)<<n;
+
+    
 }
 
 /* Return v with bit n cleared. */
 uint32_t clear_bit(uint32_t v, unsigned n)
 {
-    return 0; /* TODO */
+    return v & ~(1u << n);
 }
 
 /* Return v with bit n flipped. */
 uint32_t toggle_bit(uint32_t v, unsigned n)
 {
-    return 0; /* TODO */
+    return v^(1u << n) ; /* TODO */
 }
 
 /* True if bit n of v is 1. */
 bool test_bit(uint32_t v, unsigned n)
 {
-    return false; /* TODO */
+    if((v & (1u << n)) == 0)
+        return false; /* TODO */
+    else
+        return true;
 }
 
 /* Number of 1 bits in v. Try the `v &= v - 1` trick. */
 unsigned count_set_bits(uint32_t v)
 {
-    return 99; /* TODO */
+    unsigned n = 0;
+    while (v) {
+        v &= v - 1u;
+        n++;
+    }
+    return n; /* TODO */
 }
 
 /* True if v is a power of two (1, 2, 4, 8, ...). Zero is not. */
 bool is_power_of_two(uint32_t v)
 {
-    return false; /* TODO */
+     return v != 0 && (v & (v - 1u)) == 0; /* TODO */
 }
 
 /* ---- TESTS (do not edit below) ---- */

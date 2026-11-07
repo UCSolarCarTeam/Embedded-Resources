@@ -11,7 +11,8 @@
  * Return millivolts, truncated:  adc * 3300 / 4095. */
 uint16_t adc_to_mv(uint16_t adc)
 {
-    return 0; /* TODO */
+    uint16_t v = adc * 3300/4095;
+    return v; /* TODO */
 }
 
 /* A TMP36-style sensor gives 500 mV at 0 C and 10 mV per degree.
@@ -19,7 +20,8 @@ uint16_t adc_to_mv(uint16_t adc)
  * 750 mV -> 250 (25.0 C).   400 mV -> -100 (-10.0 C). */
 int16_t mv_to_temp_c10(uint16_t mv)
 {
-    return 0; /* TODO */
+    int16_t t = (mv - 500);
+    return t; /* TODO */
 }
 
 /* value * 100 / max, as a percentage rounded to the NEAREST whole number
@@ -27,7 +29,12 @@ int16_t mv_to_temp_c10(uint16_t mv)
  * Careful: 65535 * 100 does not fit in 16 bits. */
 uint8_t percent_rounded(uint16_t value, uint16_t max)
 {
-    return 0; /* TODO */
+    if(max == 0)
+        return 0;
+    if(value%max == 0)
+        return value*100/max;
+    else
+        return value*(100+(max/2))/max; /* TODO */
 }
 
 /* ---- TESTS (do not edit below) ---- */

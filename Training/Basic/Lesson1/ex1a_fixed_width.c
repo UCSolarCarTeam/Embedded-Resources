@@ -11,32 +11,49 @@
 /* Return a + b, wrapping around at 256. */
 uint8_t add_wrap_u8(uint8_t a, uint8_t b)
 {
-    return 0; /* TODO */
+    return a+b; /* TODO */
 }
 
 /* Return a + b, but stop at 255 instead of wrapping. */
 uint8_t add_sat_u8(uint8_t a, uint8_t b)
 {
-    return 0; /* TODO */
+   
+    if((a+b)>255)
+        return 255;
+    else
+        return a+b;
+
+     /* TODO */
 }
 
 /* Limit a 32-bit value to the int8_t range, -128 to 127. */
 int8_t clamp_to_i8(int32_t v)
 {
-    return 0; /* TODO */
+    if(v >= -128 && v <=127)
+        return v;
+    else if(v < -128)
+        return -128;
+    else
+        return 127;
+
+   /* TODO */
 }
 
 /* Average of a and b, rounded down. Must work for 255 and 255. */
 uint8_t average_u8(uint8_t a, uint8_t b)
 {
-    return 0; /* TODO */
+    
+    return (a+b)/2; /* TODO */
 }
 
 /* True if a + b would overflow a uint32_t. Don't use a 64-bit type:
  * compare against UINT32_MAX instead. */
 bool add_overflows_u32(uint32_t a, uint32_t b)
 {
-    return false; /* TODO */
+    if(a > a+b || b > a+b)
+        return true; /* TODO */
+    else
+        return false;
 }
 
 /* ---- TESTS (do not edit below) ---- */
