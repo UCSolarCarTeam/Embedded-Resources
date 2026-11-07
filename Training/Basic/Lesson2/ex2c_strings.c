@@ -18,21 +18,38 @@
  * my_strlen("hello") -> 5 */
 size_t my_strlen(const char *s)
 {
-    return 99; /* TODO */
+    size_t i =0;
+    while(s[i]!='\0'){
+        i+=1;
+    }
+
+    return i;
 }
 
 /* Count how many times the character c appears in s.
  * count_char("banana", 'a') -> 3 */
 int count_char(const char *s, char c)
 {
-    return 99; /* TODO */
+    int count = 0;
+    for(size_t i = 0; s[i]!='\0'; i++){
+        if(s[i]==c){
+            count+=1;
+        }
+    }
+
+    return count;
 }
 
 /* Copy src into dst, including the '\0' at the end.
  * (dst is always big enough in this exercise.) */
 void my_strcpy(char *dst, const char *src)
 {
-    /* TODO */
+    size_t i =0;
+    while(src[i]!='\0'){
+        dst[i] = src[i];
+        i+=1;
+    }
+    dst[i] = '\0';
 }
 
 /* Change every lowercase letter ('a' to 'z') to uppercase, in place.
@@ -41,7 +58,11 @@ void my_strcpy(char *dst, const char *src)
  * Hint: 'a' - 'A' is the distance between a lowercase and uppercase letter. */
 void to_upper(char *s)
 {
-    /* TODO */
+    for(size_t i =0; s[i]!='\0';i++){
+        if(s[i] >= 97 && s[i]<=122){
+            s[i] -=32;
+        }
+    }
 }
 
 /* If c is a digit character '0' to '9', return its value (0 to 9).
@@ -50,7 +71,11 @@ void to_upper(char *s)
  * Hint: c - '0' */
 int digit_value(char c)
 {
-    return 99; /* TODO */
+    if(c>=48 && c<=57){
+        return (int)(c - '0');
+    }
+
+    return -1;
 }
 
 /* ---- TESTS (do not edit below) ---- */
