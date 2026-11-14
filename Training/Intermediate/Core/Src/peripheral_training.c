@@ -30,6 +30,13 @@ volatile uint8_t           g_iodirb         = 0;
 volatile uint16_t          g_ports          = 0;
 volatile GPIO_PinState     g_switch         = GPIO_PIN_RESET;
 volatile uint8_t           g_rx_buffer[4]   = {0};
+volatile uint16_t          g_adc_counts     = 0;
+volatile uint8_t           g_adc_percent    = 0;
+volatile HAL_StatusTypeDef g_can_tx_status = HAL_ERROR;   /* status of the last transmit        */
+volatile uint32_t          g_can_rx_count   = 0;           /* messages received through the callback */
+volatile uint32_t          g_can_rx_id      = 0;
+volatile uint8_t           g_can_rx_ext     = 0;
+volatile uint8_t           g_can_rx_data[8] = {0};
 
 
 void Peripheral_Training_Init(void)
@@ -45,6 +52,14 @@ void Peripheral_Training_Init(void)
     case TRAINING_SPI_LEDS:
     case TRAINING_SPI_PORTS:
         g_init_status = SPI_Training_InitExpander();
+        break;
+
+    case TRAINING_ADC_PRINT:
+        g_init_status = ADC_Training_Calibrate();
+        break;
+
+    case TRAINING_CAN_LOOPBACK:
+        g_init_status = CAN_Training_Start();
         break;
 
     default:
@@ -211,6 +226,67 @@ static void Run_UartLedToggle(void)
 }
 
 
+
+/* ----------------------------- ADC runner -------------------------------- */
+
+static void Run_AdcPrint(void)
+{
+    uint16_t counts = 0;
+
+    g_status = ADC_Training_ReadRaw(&counts);
+    if (g_status == HAL_OK)
+    {
+        g_adc_counts  = counts;
+        g_adc_percent = ADC_Training_CountsToPercent(counts);
+        (void)ADC_Training_PrintReading(g_adc_counts, g_adc_percent);
+    }
+
+    HAL_Delay(500);
+}
+
+
+/* ----------------------------- CAN runner -------------------------------- */
+
+#define CAN_TEST_EXT_ID   0x18FF1234U     /* 29-bit (extended) identifier */
+#define CAN_TEST_STD_ID   0x123U          /* 11-bit (standard) identifier */
+
+static void Run_CanLoopback(void)
+{
+    static uint8_t  counter = 0;
+    static uint32_t last_tx_ms = 0;
+
+    uint8_t  rx[8] = {0};
+    uint32_t id = 0;
+    uint8_t  ext = 0;
+
+    /* Once a second: send one extended and one standard frame. */
+    if ((HAL_GetTick() - last_tx_ms) >= 1000U)
+    {
+        uint8_t tx[8] = { counter, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77 };
+
+        last_tx_ms = HAL_GetTick();
+        counter++;
+
+        g_can_tx_status = CAN_Training_Transmit(CAN_TEST_EXT_ID, 1, tx);
+        (void)CAN_Training_Transmit(CAN_TEST_STD_ID, 0, tx);
+
+        UART_Training_Print("CAN TX: extended 0x18FF1234 and standard 0x123 sent\r\n");
+    }
+
+    /* The receive CALLBACK stores incoming messages and sets a flag.
+       The slow work (printing) is done here in the main loop, not in the interrupt.
+       Only the extended frame comes back: the filter drops the standard one. */
+    if (CAN_Training_GetReceived(&id, &ext, rx))
+    {
+        g_can_rx_count++;
+        g_can_rx_id  = id;
+        g_can_rx_ext = ext;
+        for (int i = 0; i < 8; i++) { g_can_rx_data[i] = rx[i]; }
+
+        (void)CAN_Training_PrintReceived(id, ext, rx);
+    }
+}
+
 void Peripheral_Training_Run(void)
 {
     switch (ACTIVE_TRAINING)
@@ -228,6 +304,9 @@ void Peripheral_Training_Run(void)
     case TRAINING_UART_PRINT:      Run_UartPrint();      break;
     case TRAINING_UART_RECEIVE:    Run_UartReceive();    break;
     case TRAINING_UART_LED_TOGGLE: Run_UartLedToggle(); break;
+
+    case TRAINING_ADC_PRINT:       Run_AdcPrint();       break;
+    case TRAINING_CAN_LOOPBACK:    Run_CanLoopback();    break;
 
     case TRAINING_NONE:
     default:

@@ -1,8 +1,8 @@
-# Solar Car Embedded Systems: Intermediate Training
+# Solar Car Embedded Systems: Peripheral Training
 
 Welcome! In this training you will learn how a microcontroller talks to the outside world: blinking an LED
-(**GPIO**), reading a sensor (**I2C**), controlling a chip over **SPI**, and sending text to your computer
-(**UART**). You will do it on the same kind of hardware we use on the car, using ST's **HAL** library.
+(**GPIO**), reading a sensor (**I2C**), controlling a chip over **SPI**, sending text to your computer
+(**UART**), measuring voltages (**ADC**), and talking to other nodes on the car's network (**CAN**). You will do it on the same kind of hardware we use on the car, using ST's **HAL** library.
 
 ---
 
@@ -32,23 +32,23 @@ When you create a project in CubeIDE (or generate code from the `.ioc` file) you
 
 ```
 MyProject/
-├── MyProject.ioc                 CubeMX configuration: pins, clocks, peripherals (the "source of truth")
+├── MyProject.ioc               CubeMX configuration: pins, clocks, peripherals (the "source of truth")
 ├── Core/
 │   ├── Inc/
-│   │   ├── main.h                Pin name macros (e.g. Z_SPI_nCS_Pin) and includes
+│   │   ├── main.h              Pin name macros (e.g. Z_SPI_nCS_Pin) and includes
 │   │   ├── stm32h5xx_hal_conf.h  Which HAL modules are enabled
 │   │   └── stm32h5xx_it.h
 │   └── Src/
-│       ├── main.c                YOUR program starts here (main loop)
-│       ├── stm32h5xx_it.c        Interrupt handlers
-│       ├── stm32h5xx_hal_msp.c   Low-level setup of pins and clocks for each peripheral (generated)
-│       └── system_stm32h5xx.c    Clock system startup
+│       ├── main.c              YOUR program starts here (main loop)
+│       ├── stm32h5xx_it.c      Interrupt handlers
+│       ├── stm32h5xx_hal_msp.c Low-level setup of pins and clocks for each peripheral (generated)
+│       └── system_stm32h5xx.c  Clock system startup
 ├── Drivers/
-│   ├── CMSIS/                    Arm/ST core definitions (register names)
-│   └── STM32H5xx_HAL_Driver/     The HAL library itself
-├── Startup/                      Assembly that runs first after reset and then calls main()
-├── STM32H503CBTX_FLASH.ld        Linker script: where code and data live in memory
-└── Debug/                        Build output (the .elf you flash)
+│   ├── CMSIS/                  Arm/ST core definitions (register names)
+│   └── STM32H5xx_HAL_Driver/   The HAL library itself
+├── Startup/                    Assembly that runs first after reset and then calls main()
+├── STM32H503CBTX_FLASH.ld      Linker script: where code and data live in memory
+└── Debug/                      Build output (the .elf you flash)
 ```
 
 ### What happens at power-up
@@ -73,9 +73,8 @@ Always write inside a `USER CODE BEGIN ... / END ...` pair.
 
 ## 3. What is HAL, and why do we use it?
 
-**HAL (Hardware Abstraction Layer)** is a set of libraries provided by STMicroelectronics to simplify the development process on STM32 microcontrollers. HAL provides a high-level interface for interacting with the MCU's peripherals like GPIO, SPI, UART, and more, allowing developers to write code that is more portable across different STM32 devices.
-
-By using HAL, developers can avoid dealing directly with hardware registers, which speeds up development, improves readability, and reduces the complexity of peripheral configurations.
+**HAL (Hardware Abstraction Layer)** is a C library from ST that wraps the chip's hardware registers in
+readable functions.
 
 Without HAL, turning on a pin means finding the right register and bit in a 1000+ page reference manual:
 
@@ -124,8 +123,11 @@ wires. ST also offers a thinner library called LL (Low Layer) if you ever need m
 | `i2c_training.c` | I2C lesson, MC3479 accelerometer reference and your TODOs |
 | `spi_training.c` | SPI lesson, MCP23S17 I/O expander and your TODOs |
 | `uart_training.c` | UART lesson and your TODOs |
+| `adc_training.c` | ADC lesson (single channel, polling) and your TODOs |
+| `can_training.c` | CAN lesson (standard vs. extended IDs, receive callback) and your TODOs, internal loopback |
 
-You only edit `gpio_training.c`, `i2c_training.c`, `spi_training.c` and `uart_training.c`.
+You only edit `gpio_training.c`, `i2c_training.c`, `spi_training.c`, `uart_training.c`, `adc_training.c`,
+and `can_training.c`.
 
 ### Step 1: Add the files to your project
 Copy the `.c` files into `Core/Src` and `peripheral_training.h` into `Core/Inc`, then refresh the project
@@ -140,6 +142,11 @@ The training assumes these are already configured (open the `.ioc` and check):
 | I2C | I2C1 enabled (handle `hi2c1`), standard 100 kHz or fast 400 kHz |
 | SPI | SPI2 master, 8-bit, mode 0 (handle `hspi2`), baud prescaler **8 or higher**. `Z_SPI_nCS` and `Z_nRESET` as GPIO outputs with those user labels |
 | UART | USART1 asynchronous, 115200 baud, 8 data bits, no parity, 1 stop bit (handle `huart1`) |
+| ADC | ADC1, **channel IN3 on pin PA6** (set PA6 to the analog `ADC1_IN3` function, not GPIO input), 12-bit, single conversion, software trigger (handle `hadc1`) |
+| CAN | FDCAN1, **Mode: Internal LoopBack**, Frame Format: Classic, Nominal bit rate 500 kbit/s, Tx FIFO/Queue elements >= 1, Rx FIFO 0 elements >= 1 (data size 8 bytes), **Extended Filters Nbr >= 1**, **FDCAN1 interrupt 0 enabled in the NVIC** (handle `hfdcan1`) |
+
+The new files reference `hadc1` and `hfdcan1`, so these peripherals must be enabled in CubeMX for the project
+to build, even when you are working on a different training.
 
 ### Step 3: Hook it into `main.c`
 Only two lines are needed. Remove any old exercise code from earlier trainings.
@@ -193,8 +200,10 @@ Change it, rebuild, flash. Nothing else in `main.c` changes.
 | `TRAINING_UART_PRINT` | `Print`, `TransmitBytes` (uart) | Text appears in your serial terminal |
 | `TRAINING_UART_RECEIVE` | `ReceiveBytes` (uart) | Type 4 characters, they are echoed back |
 | `TRAINING_UART_LED_TOGGLE` | `WaitForToggle` (uart) | Sending `LED_TOGGLE` + Enter toggles the LED |
+| `TRAINING_ADC_PRINT` | `Calibrate`, `ReadRaw`, `CountsToPercent`, `PrintReading` (adc) | Terminal shows `ADC count=2048 percent=50%` and it follows a potentiometer (wiper on PA6, outer legs on 3V3 and GND). Needs the UART training done first |
+| `TRAINING_CAN_LOOPBACK` | `Start`, `Transmit`, the receive callback, `GetReceived`, `PrintReceived` (can) | The terminal prints `CAN RX id=0x18FF1234 ext data=...` once per second. The standard-ID frame `0x123` is sent too but never printed (the filter drops it). Needs the UART training done first |
 
-Suggested order: GPIO, then I2C, then SPI, then UART.
+Suggested order: GPIO, then I2C, then SPI, then UART, then ADC and CAN (both print over the UART).
 
 ### Step 5: Work through a file
 1. **Read the lesson comment** at the top of the file.
@@ -219,6 +228,13 @@ Suggested order: GPIO, then I2C, then SPI, then UART.
 - **UART:** same baud rate on both sides? TX and RX crossed?
 - **GPIO:** is the pin configured as output/input in CubeMX? Does a HIGH level turn the LED on or off?
   Check the schematic.
+- **ADC:** is the voltage between 0 and 3.3 V? Did you calibrate before the first conversion? Is the wiper on
+  PA6, and is PA6 set to analog (ADC1_IN3) in CubeMX? `HAL_TIMEOUT` from `PollForConversion` means the
+  conversion never finished.
+- **CAN:** did you call both `HAL_FDCAN_Start` and `HAL_FDCAN_ActivateNotification`? Is CubeMX in Internal
+  LoopBack mode with at least one extended filter, one Rx FIFO 0 element and the FDCAN1 interrupt 0 enabled
+  in the NVIC? Nothing printing? Check the callback sets the flag. A standard-ID frame that never shows up is
+  correct, not a bug.
 - Still stuck? Ask a lead before looking at the solutions.
 
 ---
@@ -234,9 +250,10 @@ Pages most relevant to this training:
 [I2C](https://wiki.st.com/stm32mcu/wiki/Getting_started_with_I2C),
 [SPI](https://wiki.st.com/stm32mcu/wiki/Getting_started_with_SPI),
 [UART](https://wiki.st.com/stm32mcu/wiki/Getting_started_with_UART),
+[ADC](https://wiki.st.com/stm32mcu/wiki/Getting_started_with_ADC),
 and for later: [EXTI (external interrupts)](https://wiki.st.com/stm32mcu/wiki/Getting_started_with_EXTI),
-[DMA](https://wiki.st.com/stm32mcu/wiki/Getting_started_with_DMA),
 [TIM (timers)](https://wiki.st.com/stm32mcu/wiki/Getting_started_with_TIM),
-[ADC](https://wiki.st.com/stm32mcu/wiki/Getting_started_with_ADC).
+[DMA](https://wiki.st.com/stm32mcu/wiki/Getting_started_with_DMA).
 
-Also keep these open while you work: the [MC3479 datasheet](https://www.memsic.com/Public/Uploads/uploadfile/files/20220522/MC3479Datasheet(APS-048-0072v1.2).pdf), the [MCP23S17 datasheet](https://ww1.microchip.com/downloads/aemDocuments/documents/APID/ProductDocuments/DataSheets/MCP23017-MCP23S17-16-Bit-IO-Expander-with-Serial-Interface-DS20001952.pdf), and the **board schematic**.
+Also keep these open while you work: the [MC3479 datasheet](https://www.memsic.com/Public/Uploads/uploadfile/files/20220522/MC3479Datasheet(APS-048-0072v1.2).pdf), the [MCP23S17 datasheet](https://ww1.microchip.com/downloads/aemDocuments/documents/APID/ProductDocuments/DataSheets/MCP23017-MCP23S17-16-Bit-IO-Expander-with-Serial-Interface-DS20001952.pdf), the
+**STM32H503 datasheet and reference manual** (its FDCAN and ADC chapters), and the **board schematic**.
