@@ -16,20 +16,25 @@ typedef enum
     TRAINING_GPIO_LED,           /* SetLed on/off, ToggleLed                  */
     TRAINING_GPIO_SWITCH,        /* LED follows the BOOT1 switch              */
 
-    /* UART */
-    TRAINING_UART_PRINT,         /* HAL_UART_Transmit                         */
-    TRAINING_UART_RECEIVE,       /* HAL_UART_Receive, fixed number of bytes   */
-    TRAINING_UART_LED_TOGGLE,     /* send LED_TOGGLE\r\n from a terminal      */
+    /* I2C + MC3479 IMU */
+    TRAINING_I2C_PROBE,          /* DeviceReady, chip ID, wrong-address test  */
+    TRAINING_I2C_ACCEL,          /* read X/Y/Z                                */
 
     /* SPI + MCP23S17 expander */
     TRAINING_SPI_EXPANDER,       /* init + read back direction registers      */
     TRAINING_SPI_LEDS,           /* binary counter on GPA0..GPA3              */
     TRAINING_SPI_PORTS,          /* read ports A and B                        */
-    
-    /* I2C + MC3479 IMU */
-    TRAINING_I2C_PROBE,          /* DeviceReady, chip ID, wrong-address test  */
-    TRAINING_I2C_ACCEL          /* read X/Y/Z                                */
 
+    /* UART */
+    TRAINING_UART_PRINT,         /* HAL_UART_Transmit                         */
+    TRAINING_UART_RECEIVE,       /* HAL_UART_Receive, fixed number of bytes   */
+    TRAINING_UART_LED_TOGGLE,    /* send LED_TOGGLE\r\n from a terminal       */
+
+    /* ADC (needs the UART training done first) */
+    TRAINING_ADC_PRINT,          /* read ADC1 channel 3 (PA6), print count and percent */
+
+    /* CAN (FDCAN, internal loopback, receive callback) */
+    TRAINING_CAN_LOOPBACK        /* extended-ID TX, RX callback, printed over UART */
 } Training_t;
 
 #ifndef ACTIVE_TRAINING
@@ -49,6 +54,8 @@ void Peripheral_Training_Run(void);
 extern I2C_HandleTypeDef hi2c1;
 extern SPI_HandleTypeDef hspi2;      /* NOTE: this project uses SPI2 */
 extern UART_HandleTypeDef huart1;
+extern ADC_HandleTypeDef hadc1;        /* ADC1, channel 3 (PA6)  */
+extern FDCAN_HandleTypeDef hfdcan1;    /* FDCAN1, internal loopback */
 
 #ifndef TRAINING_I2C_HANDLE
 #define TRAINING_I2C_HANDLE hi2c1
@@ -58,6 +65,12 @@ extern UART_HandleTypeDef huart1;
 #endif
 #ifndef TRAINING_UART_HANDLE
 #define TRAINING_UART_HANDLE huart1
+#endif
+#ifndef TRAINING_ADC_HANDLE
+#define TRAINING_ADC_HANDLE hadc1
+#endif
+#ifndef TRAINING_CAN_HANDLE
+#define TRAINING_CAN_HANDLE hfdcan1
 #endif
 
 /* MC3479 7-bit I2C address is 0x4C. (HAL wants it shifted left by one.) */
@@ -109,5 +122,17 @@ HAL_StatusTypeDef UART_Training_ReceiveBytes(uint8_t *buffer,
                                               uint16_t length,
                                               uint32_t timeout_ms);
 HAL_StatusTypeDef UART_Training_WaitForToggle(uint32_t timeout_ms);
+
+/* ADC training: ADC1 channel 3 (PA6), polling. */
+HAL_StatusTypeDef ADC_Training_Calibrate(void);
+HAL_StatusTypeDef ADC_Training_ReadRaw(uint16_t *counts);
+uint8_t ADC_Training_CountsToPercent(uint16_t counts);
+HAL_StatusTypeDef ADC_Training_PrintReading(uint16_t counts, uint8_t percent);
+
+/* CAN training: FDCAN1 in internal loopback, classic frames, receive callback. */
+HAL_StatusTypeDef CAN_Training_Start(void);
+HAL_StatusTypeDef CAN_Training_Transmit(uint32_t id, uint8_t is_extended, const uint8_t data[8]);
+uint8_t CAN_Training_GetReceived(uint32_t *id, uint8_t *is_extended, uint8_t data[8]);
+HAL_StatusTypeDef CAN_Training_PrintReceived(uint32_t id, uint8_t is_extended, const uint8_t data[8]);
 
 #endif
