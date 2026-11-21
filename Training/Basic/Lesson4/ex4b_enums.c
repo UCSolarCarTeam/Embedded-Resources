@@ -21,14 +21,30 @@ typedef enum {
  * Use a switch with a default case. */
 const char *led_mode_name(LedMode m)
 {
-    return ""; /* TODO */
+    switch(m){
+        case(LED_ON):
+            return "ON";
+        case(LED_OFF):
+            return "OFF";
+        case(LED_BLINK_SLOW):
+            return "BLINK_SLOW";
+        case(LED_BLINK_FAST):
+            return "BLINK_FAST";
+        default:
+            return "UNKNOWN";
+    }
 }
 
 /* Return the next mode in the cycle:
  * OFF -> ON -> BLINK_SLOW -> BLINK_FAST -> back to OFF. */
 LedMode next_led_mode(LedMode m)
 {
-    return LED_MODE_COUNT; /* TODO */
+    if(m>=0 && m<=2){
+        LedMode M=++m;
+        return M;
+    }else{
+        return 0;
+    }
 }
 
 /* Should the LED be lit at this tick (tick counts 0, 1, 2, 3, ...)?
@@ -39,7 +55,18 @@ LedMode next_led_mode(LedMode m)
  * Hint: tick / 4 and tick % 2 are useful. */
 bool led_is_on(LedMode m, unsigned tick)
 {
-    return false; /* TODO */
+    switch(m){
+        case LED_OFF:
+            return false;
+        case LED_ON:
+            return true;
+        case LED_BLINK_SLOW:
+            return (tick/4)%2==0;
+        case LED_BLINK_FAST:
+            return tick%2==0;
+        default:
+            return false;
+    }
 }
 
 typedef enum {
@@ -54,7 +81,15 @@ typedef enum {
  * Hint: strcmp(a, b) returns 0 when the two strings are equal. */
 Command parse_command(const char *text)
 {
-    return CMD_RESET; /* TODO */
+    if(strcmp(text,"start")==0){
+        return CMD_START;
+    }else if(strcmp(text,"stop")==0){
+        return CMD_STOP;
+    }else if(strcmp(text,"reset")==0){
+        return CMD_RESET;
+    }else{
+        return CMD_NONE;
+    }
 }
 
 /* ---- TESTS (do not edit below) ---- */
