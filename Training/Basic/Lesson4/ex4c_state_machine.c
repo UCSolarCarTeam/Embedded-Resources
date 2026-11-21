@@ -24,8 +24,23 @@ typedef enum { EVT_OPEN, EVT_CLOSE, EVT_LOCK, EVT_UNLOCK } DoorEvent;
 /* Return the new state after `event` happens in `state`. */
 DoorState door_next(DoorState state, DoorEvent event)
 {
-    return DOOR_LOCKED; /* TODO */
+    switch(state){
+        case DOOR_CLOSED:
+            if(event == EVT_OPEN){return DOOR_OPEN;}
+            if(event == EVT_LOCK){return DOOR_LOCKED;}
+            break;
+        case DOOR_OPEN:
+            if(event == EVT_CLOSE){return DOOR_CLOSED;}
+            break;
+        case DOOR_LOCKED:
+            if(event == EVT_UNLOCK){return DOOR_CLOSED;}
+            break;
+        default:
+            break;
+    }
+    return state;
 }
+
 
 /* ---- Part B: a traffic light ----
  * The light has a state and a count of ticks left in that state.
@@ -46,14 +61,31 @@ typedef struct {
 /* Start the light at RED with RED_TICKS ticks left. */
 void tl_init(TrafficLight *t)
 {
-    /* TODO */
+    t->state = LIGHT_RED;
+    t->ticks_left = RED_TICKS;
 }
 
 /* One tick of time passes. Subtract 1 from ticks_left. If it reaches 0,
  * move to the next state and set ticks_left for that new state. */
 void tl_tick(TrafficLight *t)
 {
-    /* TODO */
+    t->ticks_left = t->ticks_left-1;
+    if(t->ticks_left==0){
+        switch(t->state){
+            case LIGHT_RED:
+                t->state = LIGHT_GREEN;
+                t->ticks_left = GREEN_TICKS;
+                break;
+            case LIGHT_GREEN:
+                t->state = LIGHT_YELLOW;
+                t->ticks_left = YELLOW_TICKS;
+                break;
+            case LIGHT_YELLOW:
+                t->state = LIGHT_RED;
+                t->ticks_left = RED_TICKS;
+                break;
+        }
+    }
 }
 
 /* ---- TESTS (do not edit below) ---- */
